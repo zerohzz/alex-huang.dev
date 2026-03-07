@@ -8,6 +8,7 @@ import Card from "@/components/Card.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
 import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
 import { SITE } from "@/config";
+import { HERO } from "@/data/hero";
 
 const posts = await getCollection("blog");
 
@@ -39,6 +40,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
               id="typed-text"
               class="text-xl md:text-3xl font-semibold text-accent"
               aria-live="polite"
+              data-roles={JSON.stringify(HERO.roles)}
             ></span>
             <span class="text-xl md:text-3xl font-semibold text-accent typing-cursor">|</span>
           </div>
@@ -81,7 +83,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
               <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
               <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
-            <span>Melbourne, Australia</span>
+            <span>{HERO.location}</span>
           </div>
         </div>
 
@@ -158,11 +160,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
     const typedText = document.getElementById("typed-text");
     if (!typedText) return;
 
-    const ROLES = [
-      "Salesforce Engineer",
-      "LWC Developer",
-      "AI-assisted Developer",
-    ];
+    const ROLES: string[] = JSON.parse(typedText.dataset.roles ?? "[]");
 
     let roleIndex = 0;
     let charIndex = 0;
