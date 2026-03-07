@@ -1,0 +1,456 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import { SITE } from "@/config";
+import { EXPERIENCE, PROJECTS, SKILLS, EDUCATION, CERTS } from "@/data/resume";
+---
+
+<Layout title={`Resume | ${SITE.title}`} description="Senior Salesforce Developer resume — Alex Huang, Melbourne">
+  <Header />
+  <main id="main-content" class="w-full max-w-5xl mx-auto px-4 py-12 md:py-16">
+
+    <!-- Resume Header -->
+    <header class="mb-12 md:mb-16 border-b border-border pb-8" data-fade-up>
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div>
+          <h1 class="text-4xl md:text-5xl font-bold mb-2">Alex Huang</h1>
+          <p class="text-xl text-text-muted mb-4">Senior Salesforce Developer · Melbourne, Australia</p>
+          <div class="flex flex-wrap items-center gap-4 text-sm font-medium text-text-muted">
+            <a
+              href="https://github.com/zerohzz"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-magnetic="0.2"
+              class="hover:text-accent flex items-center gap-1 p-1 transition-colors"
+            >
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+              </svg>
+              GitHub
+            </a>
+            <a
+              href="https://www.linkedin.com/in/azhua/"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-magnetic="0.2"
+              class="hover:text-accent flex items-center gap-1 p-1 transition-colors"
+            >
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+              LinkedIn
+            </a>
+            <a
+              href="mailto:alexander-huang@outlook.com"
+              data-magnetic="0.2"
+              class="hover:text-accent flex items-center gap-1 p-1 transition-colors"
+            >
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+              </svg>
+              alexander-huang@outlook.com
+            </a>
+          </div>
+        </div>
+        <a
+          href="/resume/alex-huang-resume.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          data-magnetic="0.1"
+          class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-accent text-white font-medium rounded-lg hover:opacity-90 transition-opacity whitespace-nowrap self-start md:self-auto"
+        >
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+          </svg>
+          Download CV
+        </a>
+      </div>
+    </header>
+
+    <!-- Two Column Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
+
+      <!-- Left Column: Experience + Projects -->
+      <div class="md:col-span-7">
+
+        <!-- Experience -->
+        <section class="mb-12" data-fade-up data-delay="0.1">
+          <h2 class="text-sm font-semibold uppercase tracking-widest mb-6 border-b border-border pb-2 text-text-muted">
+            Experience
+          </h2>
+          <div class="flex flex-col gap-8">
+            {EXPERIENCE.map(job => (
+              <div class="flex flex-col">
+                <h3 class="text-xl font-bold mb-1">{job.title}</h3>
+                <div class="flex flex-wrap items-center gap-2 text-sm mb-1">
+                  <a
+                    href={job.companyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="font-medium hover:text-accent transition-colors"
+                  >
+                    {job.company}
+                  </a>
+                  <span class="text-border">·</span>
+                  <span class="text-text-muted">{job.location}</span>
+                </div>
+                <div class="text-sm text-text-muted">{job.start} — {job.end}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <!-- Projects -->
+        <section class="mb-12" data-fade-up data-delay="0.2">
+          <h2 class="text-sm font-semibold uppercase tracking-widest mb-6 border-b border-border pb-2 text-text-muted">
+            Projects
+          </h2>
+          <div class="flex flex-col gap-6">
+            {PROJECTS.map(project => (
+              <div class="flex flex-col bg-card p-4 md:p-6 rounded-xl border border-border shadow-sm hover:border-accent transition-colors">
+                <div class="flex justify-between items-start mb-2">
+                  <h3 class="text-lg font-bold">
+                    {project.name}
+                    <span class="text-text-muted font-medium text-sm"> — {project.context}</span>
+                  </h3>
+                  {project.link && project.link !== "#" && (
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-accent hover:opacity-80 transition-opacity flex items-center gap-1 shrink-0 ml-2"
+                      aria-label={`View ${project.name}`}
+                    >
+                      <span class="hidden md:inline text-xs font-medium">View</span>
+                      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                      </svg>
+                    </a>
+                  )}
+                </div>
+                <div class="text-xs text-text-muted mb-4">{project.start} · {project.end}</div>
+                <ul class="list-disc list-inside text-sm text-foreground/80 mb-4 space-y-1.5">
+                  {project.bullets.map(bullet => <li>{bullet}</li>)}
+                </ul>
+                <div class="flex flex-wrap gap-2 mt-auto">
+                  {project.tags.map(tag => (
+                    <span class="px-3 py-1 bg-card-muted text-xs font-medium rounded-full border border-border/50 text-text-muted">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Right Column: Skills + Education + Certs -->
+      <div class="md:col-span-5">
+
+        <!-- Skills -->
+        <section class="mb-12" data-fade-up data-delay="0.3">
+          <h2 class="text-sm font-semibold uppercase tracking-widest mb-6 border-b border-border pb-2 text-text-muted">
+            Skills
+          </h2>
+
+          <!-- View toggle -->
+          <div class="flex justify-center mb-6">
+            <div class="flex items-center bg-card border border-border rounded-full p-1 shadow-sm">
+              <button
+                id="skills-tab-btn"
+                class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all text-text-muted hover:bg-card-muted"
+              >
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+                </svg>
+                Tags
+              </button>
+              <button
+                id="skills-sphere-btn"
+                class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all bg-accent text-white shadow-md"
+              >
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path stroke-linecap="round" d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
+                </svg>
+                3D Sphere
+              </button>
+            </div>
+          </div>
+
+          <!-- Tag view -->
+          <div id="skills-tag-view" class="hidden flex-wrap gap-2 justify-center">
+            {SKILLS.map(skill => (
+              <span class="px-3 py-1.5 bg-card border border-border rounded-full text-sm font-medium text-foreground hover:border-accent hover:text-accent transition-colors cursor-default shadow-sm">
+                {skill}
+              </span>
+            ))}
+          </div>
+
+          <!-- Sphere view -->
+          <div id="skills-sphere-view" class="relative w-full aspect-square max-w-[360px] mx-auto">
+            <!-- Wireframe rings -->
+            <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-10 dark:opacity-20">
+              <div class="w-[70%] h-[70%] rounded-full border border-foreground absolute" style="transform: rotateX(60deg)"></div>
+              <div class="w-[70%] h-[70%] rounded-full border border-foreground absolute" style="transform: rotateY(60deg)"></div>
+              <div class="w-[70%] h-[70%] rounded-full border border-foreground absolute" style="transform: rotateZ(60deg)"></div>
+              <div class="w-[70%] h-[70%] rounded-full border border-foreground absolute"></div>
+            </div>
+            <!-- Skill labels injected by JS -->
+            <div
+              id="sphere-container"
+              class="absolute inset-0 overflow-hidden cursor-grab active:cursor-grabbing touch-none"
+              style="perspective: 1000px"
+            ></div>
+            <!-- Drag hint -->
+            <div class="absolute -bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 px-4 py-1.5 bg-card rounded-full text-xs font-medium text-text-muted border border-border pointer-events-none shadow-sm whitespace-nowrap">
+              <svg class="w-3 h-3 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path stroke-linecap="round" d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
+              </svg>
+              Drag to explore
+            </div>
+          </div>
+        </section>
+
+        <!-- Education -->
+        <section class="mb-12 mt-8" data-fade-up data-delay="0.4">
+          <h2 class="text-sm font-semibold uppercase tracking-widest mb-6 border-b border-border pb-2 text-text-muted">
+            Education
+          </h2>
+          <div class="flex flex-col gap-6">
+            {EDUCATION.map(edu => (
+              <div class="flex flex-col">
+                <h3 class="text-lg font-bold mb-1">{edu.degree}</h3>
+                <div class="flex flex-wrap items-center gap-2 text-sm mb-1">
+                  <a
+                    href={edu.universityUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="font-medium hover:text-accent transition-colors"
+                  >
+                    {edu.university}
+                  </a>
+                  <span class="text-border">·</span>
+                  <span class="text-text-muted">{edu.location}</span>
+                </div>
+                <div class="text-sm text-text-muted">{edu.years}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <!-- Certifications -->
+        <section class="mb-12" data-fade-up data-delay="0.5">
+          <h2 class="text-sm font-semibold uppercase tracking-widest mb-6 border-b border-border pb-2 text-text-muted">
+            Certifications
+          </h2>
+          <div class="flex flex-col gap-4">
+            {CERTS.map(cert => (
+              <div class="flex flex-col bg-card p-4 rounded-xl border border-border shadow-sm hover:border-accent transition-colors">
+                <div class="flex justify-between items-start mb-1">
+                  <h3 class="text-base font-bold pr-4">{cert.name}</h3>
+                  {cert.credentialUrl && cert.credentialUrl !== "#" && (
+                    <a
+                      href={cert.credentialUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-accent hover:opacity-80 transition-opacity flex items-center gap-1 shrink-0"
+                      aria-label={`View ${cert.name} credential`}
+                    >
+                      <span class="hidden md:inline text-xs font-medium">Show</span>
+                      <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                      </svg>
+                    </a>
+                  )}
+                </div>
+                <div class="text-sm text-text-muted">{cert.issuer}</div>
+                <div class="text-xs text-text-muted/70 mt-1">Issued {cert.issued}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<script define:vars={{ skills: SKILLS }}>
+  // ── Skills sphere + tab toggle ──────────────────────────────────────────────
+
+  const SKILL_LIST = skills;
+
+  // Build sphere points using Fibonacci / golden-angle spiral
+  function buildPoints() {
+    const phi = Math.PI * (3 - Math.sqrt(5));
+    return SKILL_LIST.map((text, i) => {
+      const y = 1 - (i / (SKILL_LIST.length - 1)) * 2;
+      const r = Math.sqrt(1 - y * y);
+      const theta = phi * i;
+      return { x: Math.cos(theta) * r, y, z: Math.sin(theta) * r, text };
+    });
+  }
+
+  const POINTS = buildPoints();
+
+  // Inject label divs into sphere container
+  function buildSphere() {
+    const container = document.getElementById("sphere-container");
+    if (!container) return;
+    container.innerHTML = "";
+    POINTS.forEach((_, i) => {
+      const el = document.createElement("div");
+      el.id = `skill-${i}`;
+      el.className =
+        "absolute font-bold select-none whitespace-nowrap text-xs md:text-sm pointer-events-none";
+      el.style.transform = "translate(-50%, -50%)";
+      el.textContent = POINTS[i].text;
+      container.appendChild(el);
+    });
+  }
+
+  // Rotation state (shared via closure, re-set on each initResume call)
+  let rotX = 0;
+  let rotY = 0;
+  let velX = 0.002;
+  let velY = 0.002;
+  let dragging = false;
+  let lastMX = 0;
+  let lastMY = 0;
+  let rafId = 0;
+  let sphereActive = true;
+
+  function renderSphere() {
+    const container = document.getElementById("sphere-container");
+    if (!container) return;
+
+    const cosX = Math.cos(rotX), sinX = Math.sin(rotX);
+    const cosY = Math.cos(rotY), sinY = Math.sin(rotY);
+
+    POINTS.forEach((pt, i) => {
+      const el = document.getElementById(`skill-${i}`);
+      if (!el) return;
+
+      // Rotate X axis
+      const y1 = pt.y * cosX - pt.z * sinX;
+      const z1 = pt.y * sinX + pt.z * cosX;
+      // Rotate Y axis
+      const x2 = pt.x * cosY + z1 * sinY;
+      const z2 = -pt.x * sinY + z1 * cosY;
+
+      const scale = (z2 + 2) / 3;
+      const opacity = Math.max(0.1, (z2 + 1.5) / 2.5);
+      const left = `${x2 * 40 * scale + 50}%`;
+      const top = `${y1 * 40 * scale + 50}%`;
+
+      el.style.left = left;
+      el.style.top = top;
+      el.style.opacity = String(opacity);
+      el.style.transform = `translate(-50%, -50%) scale(${scale})`;
+      el.style.zIndex = String(Math.round(z2 * 100));
+      el.style.color =
+        z2 > 0.5 ? "var(--color-accent)" : "var(--color-foreground)";
+      el.style.filter = z2 < -0.5 ? "blur(2px)" : "none";
+    });
+  }
+
+  function animateSphere() {
+    if (!sphereActive) return;
+    if (!dragging) {
+      velX *= 0.95;
+      velY *= 0.95;
+      if (Math.abs(velX) < 0.001) velX = 0.001;
+      if (Math.abs(velY) < 0.001) velY = 0.001;
+    }
+    rotX += velX;
+    rotY += velY;
+    renderSphere();
+    rafId = requestAnimationFrame(animateSphere);
+  }
+
+  function startDrag(mx, my) {
+    dragging = true;
+    lastMX = mx;
+    lastMY = my;
+  }
+
+  function moveDrag(mx, my) {
+    if (!dragging) return;
+    velX = (my - lastMY) * 0.005;
+    velY = (mx - lastMX) * 0.005;
+    lastMX = mx;
+    lastMY = my;
+  }
+
+  function endDrag() {
+    dragging = false;
+  }
+
+  function initResume() {
+    buildSphere();
+
+    const sphereContainer = document.getElementById("sphere-container");
+    const sphereView = document.getElementById("skills-sphere-view");
+    const tagView = document.getElementById("skills-tag-view");
+    const tabBtn = document.getElementById("skills-tab-btn");
+    const sphereBtn = document.getElementById("skills-sphere-btn");
+
+    if (!sphereContainer || !sphereView || !tagView || !tabBtn || !sphereBtn) return;
+
+    // Wire up mouse / touch events for drag
+    sphereContainer.addEventListener("mousedown", e => startDrag(e.clientX, e.clientY));
+    sphereContainer.addEventListener("mousemove", e => moveDrag(e.clientX, e.clientY));
+    sphereContainer.addEventListener("mouseup", endDrag);
+    sphereContainer.addEventListener("mouseleave", endDrag);
+    sphereContainer.addEventListener("touchstart", e => startDrag(e.touches[0].clientX, e.touches[0].clientY), { passive: true });
+    sphereContainer.addEventListener("touchmove", e => moveDrag(e.touches[0].clientX, e.touches[0].clientY), { passive: true });
+    sphereContainer.addEventListener("touchend", endDrag);
+
+    // Toggle buttons
+    function showSphere() {
+      sphereActive = true;
+      sphereView.classList.remove("hidden");
+      tagView.classList.remove("flex");
+      tagView.classList.add("hidden");
+      sphereBtn.classList.add("bg-accent", "text-white", "shadow-md");
+      sphereBtn.classList.remove("text-text-muted", "hover:bg-card-muted");
+      tabBtn.classList.remove("bg-accent", "text-white", "shadow-md");
+      tabBtn.classList.add("text-text-muted", "hover:bg-card-muted");
+      cancelAnimationFrame(rafId);
+      animateSphere();
+    }
+
+    function showTabs() {
+      sphereActive = false;
+      cancelAnimationFrame(rafId);
+      sphereView.classList.add("hidden");
+      tagView.classList.remove("hidden");
+      tagView.classList.add("flex");
+      tabBtn.classList.add("bg-accent", "text-white", "shadow-md");
+      tabBtn.classList.remove("text-text-muted", "hover:bg-card-muted");
+      sphereBtn.classList.remove("bg-accent", "text-white", "shadow-md");
+      sphereBtn.classList.add("text-text-muted", "hover:bg-card-muted");
+    }
+
+    tabBtn.addEventListener("click", showTabs);
+    sphereBtn.addEventListener("click", showSphere);
+
+    // Start with sphere
+    cancelAnimationFrame(rafId);
+    sphereActive = true;
+    animateSphere();
+  }
+
+  initResume();
+  document.addEventListener("astro:page-load", initResume);
+  document.addEventListener("astro:before-swap", () => {
+    sphereActive = false;
+    cancelAnimationFrame(rafId);
+  });
+</script>
