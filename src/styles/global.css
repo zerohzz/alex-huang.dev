@@ -1,0 +1,148 @@
+@import "tailwindcss";
+@import "./typography.css";
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+:root,
+html[data-theme="light"] {
+  --background: #f7f6f3;
+  --foreground: #1a1915;
+  --accent: #6F4E37;
+  --muted: #ece9e2;
+  --border: #d9d5cc;
+  --text-muted: #6b6760;
+  --card: #ffffff;
+  --card-muted: #ece9e2;
+}
+
+html[data-theme="dark"] {
+  --background: #1c1b19;
+  --foreground: #ebe9e0;
+  --accent: #6F4E37;
+  --muted: #2a2925;
+  --border: #3a3835;
+  --text-muted: #9b9690;
+  --card: #2a2925;
+  --card-muted: #161614;
+}
+
+@theme inline {
+  --font-app: var(--font-outfit);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-text-muted: var(--text-muted);
+  --color-card: var(--card);
+  --color-card-muted: var(--card-muted);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-accent/75;
+    scrollbar-width: auto;
+    scrollbar-color: var(--color-muted) transparent;
+  }
+  html {
+    @apply overflow-y-scroll scroll-smooth;
+  }
+  body {
+    @apply flex min-h-svh flex-col bg-background font-app text-foreground selection:bg-accent/75 selection:text-background;
+  }
+  a,
+  button {
+    @apply outline-offset-1 outline-accent focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-dashed;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+@utility max-w-app {
+  @apply max-w-3xl;
+}
+
+@utility app-layout {
+  @apply mx-auto w-full max-w-app px-4;
+}
+
+.active-nav {
+  @apply underline decoration-wavy decoration-2 underline-offset-8;
+}
+
+/* Custom cursor */
+#custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  background: white;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s ease, height 0.2s ease, opacity 0.3s ease;
+  opacity: 0;
+  display: none;
+}
+
+@media (pointer: fine) and (hover: hover) {
+  #custom-cursor {
+    display: block;
+  }
+}
+
+#custom-cursor.hovering {
+  width: 48px;
+  height: 48px;
+}
+
+#custom-cursor.visible {
+  opacity: 1;
+}
+
+/* Fade-up scroll animation */
+[data-fade-up] {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.6s cubic-bezier(0.21, 0.47, 0.32, 0.98),
+    transform 0.6s cubic-bezier(0.21, 0.47, 0.32, 0.98);
+}
+
+[data-fade-up].in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Dot pattern decoration */
+.dot-pattern {
+  background-image: radial-gradient(var(--accent) 1px, transparent 1px);
+  background-size: 20px 20px;
+  opacity: 0.3;
+}
+
+/* Typing cursor blink */
+.typing-cursor {
+  animation: blink 1s step-start infinite;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Source: https://piccalil.li/blog/a-more-modern-css-reset/ */
+/* Anything that has been anchored to should have extra scroll margin */
+:target {
+  scroll-margin-block: 1rem;
+}
