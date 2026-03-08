@@ -69,7 +69,7 @@ html[data-theme="dark"] {
 }
 
 .active-nav {
-  @apply underline decoration-wavy decoration-2 underline-offset-8;
+  @apply underline decoration-wavy decoration-2 underline-offset-8 decoration-accent;
 }
 
 /* Custom cursor */
