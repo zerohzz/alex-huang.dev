@@ -4,12 +4,12 @@ export const HERO = {
   logoPrefix: "alex-huang",
   logoSuffix: ".dev",
   roles: [
-    "Salesforce Developer",
+    "Salesforce Engineer",
     "Technical Consultant",
-    "Full Stack Engineer",
+    "AI Integration Engineer",
     "Functional BA"
   ],
   location: "Melbourne, Australia",
   // Used in the hero section description (also reflected in SITE.desc in config.ts)
-  bio: "Senior Salesforce Developer with 7+ years across consulting and in-house delivery. Currently sole developer for a global entertainment company — owning LWC engineering, Apex, CI/CD, and integrations across 60+ venues in AU, NZ, and US.",
+  bio: "Senior Salesforce Engineer & Technical Consultant with 7+ years across public sector, healthcare, and enterprise environments. End-to-end solution delivery specialist — Apex, LWC, DevOps/CI/CD, AI integration, and scalable solution architecture across 60+ venues in AU, NZ, and US.",
 } as const;

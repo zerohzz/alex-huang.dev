@@ -2,7 +2,7 @@ export const SITE = {
   website: "https://alex-huang.dev/",
   author: "Alex Huang",
   profile: "https://github.com/zerohzz",
-  desc: "Senior Salesforce Developer with 7+ years across consulting and in-house delivery. Currently sole developer for a global entertainment company — owning LWC engineering, Apex, CI/CD, and integrations across 60+ venues in AU, NZ, and US.",
+  desc: "Senior Salesforce Engineer & Technical Consultant with 7+ years across public sector, healthcare, and enterprise environments. End-to-end solution delivery specialist — Apex, LWC, DevOps/CI/CD, AI integration, and scalable solution architecture across 60+ venues in AU, NZ, and US.",
   title: "Alex Huang",
   ogImage: "og.jpg",
   lightAndDarkMode: true,

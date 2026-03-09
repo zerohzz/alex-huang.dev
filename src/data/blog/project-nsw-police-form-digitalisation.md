@@ -5,12 +5,23 @@ title: "Digitising NSW Police Force's Public Assembly Notice: LWC on Experience 
 featured: false
 draft: false
 tags:
+  - Project
   - LWC
   - Experience Cloud
   - Salesforce
   - Public Sector
   - Deloitte
 description: "How I led the LWC development to digitalise the NSW Police Force's paper-based Public Assembly notice form into a Salesforce Experience Cloud community portal — deploying 180+ components end-to-end."
+---
+
+| | |
+|:--|:--|
+| **Project** | NSW Police Force — Form Digital Transformation |
+| **Company** | Deloitte Digital (Client: NSW Police Force) |
+| **Timeline** | Dec 2022 – Apr 2023 |
+| **Role** | Lead Developer |
+| **Stack** | LWC · Experience Cloud · Apex · Change Sets · Google reCAPTCHA |
+
 ---
 
 In late 2022 I joined Deloitte Digital's engagement with NSW Police Force as the lead developer on a digital transformation project. The challenge: replace a paper-based Public Assembly notice process with a self-service digital form embedded in the existing Salesforce Experience Cloud community portal.

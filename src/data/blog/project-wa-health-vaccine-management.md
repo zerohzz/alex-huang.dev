@@ -5,12 +5,23 @@ title: "WA Health Vaccine Management: Cutting User Provisioning from 23 Minutes 
 featured: false
 draft: false
 tags:
+  - Project
   - Apex
   - Flows
   - Salesforce
   - Healthcare
   - Deloitte
 description: "How I helped build WA Health's COVID-19 Vaccine Management System on Salesforce — including an automation that cut user provisioning time from 23 minutes to 3 minutes per account."
+---
+
+| | |
+|:--|:--|
+| **Project** | WA Health — Vaccine Management System |
+| **Company** | Deloitte Digital (Client: WA Health) |
+| **Timeline** | Jan 2022 – Aug 2022 |
+| **Role** | Salesforce Developer (CI/CD Stream) |
+| **Stack** | Apex · Flows · Email Service · Permission Set Groups · DevOps |
+
 ---
 
 In early 2022, Deloitte Digital was engaged by the Western Australian Department of Health to deliver a Vaccine Management System (VMS) on Salesforce. The system needed to manage COVID-19 vaccination inventory distribution, a vaccinator portal, and a vaccine recipient portal — at scale, across a state-wide immunisation program.
