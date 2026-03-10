@@ -137,10 +137,10 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
     <div class="my-8 text-center" data-fade-up>
       <a
         href="/posts/"
-        class="inline-flex items-center gap-2 px-6 py-3 border border-border rounded-lg text-text-muted hover:border-accent hover:text-accent transition-colors font-medium"
+        class="group inline-flex items-center gap-2 px-6 py-3 border border-border rounded-lg text-text-muted hover:border-accent hover:text-accent transition-colors font-medium"
       >
         All Posts
-        <IconArrowRight class="inline-block" />
+        <IconArrowRight class="inline-block transition-transform group-hover:translate-x-1" />
       </a>
     </div>
 

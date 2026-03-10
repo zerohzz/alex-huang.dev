@@ -11,5 +11,5 @@ export const HERO = {
   ],
   location: "Melbourne, Australia",
   // Used in the hero section description (also reflected in SITE.desc in config.ts)
-  bio: "Senior Salesforce Engineer & Technical Consultant with 7+ years across public sector, healthcare, and enterprise environments. End-to-end solution delivery specialist — Apex, LWC, DevOps/CI/CD, AI integration, and scalable solution architecture across 60+ venues in AU, NZ, and US.",
+  bio: "Senior Engineer & Technical Consultant | 7+ Years | Salesforce · Apex · LWC · DevOps · AI Integration. End-to-end solution delivery specialist across public sector, healthcare, and enterprise environments. Expert in scalable solution architecture, Apex/LWC development, DevOps/CI/CD, and integration patterns — with a strong track record of transforming complex business requirements into production-ready systems.",
 } as const;
