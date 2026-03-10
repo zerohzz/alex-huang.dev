@@ -14,15 +14,6 @@ tags:
 description: "How I helped build WA Health's COVID-19 Vaccine Management System on Salesforce — including an automation that cut user provisioning time from 23 minutes to 3 minutes per account."
 ---
 
-| | |
-|:--|:--|
-| **Project** | WA Health — Vaccine Management System |
-| **Company** | Deloitte Digital (Client: WA Health) |
-| **Timeline** | Jan 2022 – Aug 2022 |
-| **Role** | Salesforce Developer (CI/CD Stream) |
-| **Stack** | Apex · Flows · Email Service · Permission Set Groups · DevOps |
-
----
 
 In early 2022, Deloitte Digital was engaged by the Western Australian Department of Health to deliver a Vaccine Management System (VMS) on Salesforce. The system needed to manage COVID-19 vaccination inventory distribution, a vaccinator portal, and a vaccine recipient portal — at scale, across a state-wide immunisation program.
 
@@ -41,20 +32,6 @@ The solution involved:
 - A **Screen Flow** walking admins through the required inputs with validation
 - An **Apex Email Service** handler that processed provisioning requests submitted via email — a key channel for site administrators in remote vaccination locations who couldn't always access the portal directly
 - **Permission Set Groups** configured to package the correct access profiles for each role type (vaccinator, site manager, inventory clerk), applied automatically on provisioning completion
-
-```apex
-// Email Service handler — triggered when provisioning request email arrives
-global class UserProvisioningEmailHandler implements Messaging.InboundEmailHandler {
-    global Messaging.InboundEmailResult handleInboundEmail(
-        Messaging.InboundEmail email,
-        Messaging.InboundEnvelope envelope
-    ) {
-        // Parse provisioning request from email body
-        // Trigger provisioning Flow via Flow.Interview
-        // Send confirmation back to requestor
-    }
-}
-```
 
 ## Flow Development
 

@@ -2,7 +2,8 @@ export const EXPERIENCE = [
   {
     title: "Senior Salesforce Engineer",
     company: "Funlab",
-    companyUrl: "#",
+    companyUrl: "https://fun-lab.com/",
+    logo: "/images/logos/funlab-white.png",
     linkedinUrl: "https://www.linkedin.com/company/funlab-pty-ltd",
     location: "Melbourne, Australia",
     start: "Jul 2023",
@@ -17,7 +18,8 @@ export const EXPERIENCE = [
   {
     title: "Consultant / Salesforce Developer",
     company: "Deloitte Digital",
-    companyUrl: "#",
+    companyUrl: "https://www.deloitte.com/au/en.html",
+    logo: "/images/logos/deloitte.svg",
     linkedinUrl: "https://www.linkedin.com/company/deloitte-digital",
     location: "Sydney – Melbourne, Australia",
     start: "Mar 2021",
@@ -32,7 +34,7 @@ export const EXPERIENCE = [
   {
     title: "Technical Consultant",
     company: "Visible Insights",
-    companyUrl: "#",
+    companyUrl: "https://www.linkedin.com/company/visible-insights",
     linkedinUrl: "https://www.linkedin.com/company/visible-insights",
     location: "Sydney, Australia",
     start: "Jul 2018",
@@ -260,9 +262,9 @@ export const CERTS = [
   },
   {
     name: "Trailhead Ranger",
-    issuer: "Salesforce",
+    issuer: "Trailhead",
     issued: "2022",
-    credentialUrl: "https://trailblazer.salesforce.com/",
+    credentialUrl: "https://www.salesforce.com/trailblazer/azhua",
   },
   {
     name: "MS-339: Managing Microsoft SharePoint Server",

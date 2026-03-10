@@ -15,7 +15,7 @@ import { EXPERIENCE, PROJECTS, SKILLS, SKILL_GROUPS, EDUCATION, CERTS } from "@/
       <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
           <h1 class="text-4xl md:text-5xl font-bold mb-2">Alex Huang</h1>
-          <p class="text-xl text-text-muted mb-4">Senior Salesforce Developer · Sydney, Australia</p>
+          <p class="text-xl text-text-muted mb-4">Senior Salesforce Developer · Melbourne, Australia</p>
           <div class="flex flex-wrap items-center gap-4 text-sm font-medium text-text-muted">
             <a
               href="https://github.com/zerohzz"
@@ -85,7 +85,18 @@ import { EXPERIENCE, PROJECTS, SKILLS, SKILL_GROUPS, EDUCATION, CERTS } from "@/
                 <h3 class="text-xl font-bold mb-1">{job.title}</h3>
                 <div class="flex flex-wrap items-center gap-2 text-sm mb-1">
                   <span class="font-medium">{job.company}</span>
-                  {job.linkedinUrl && (
+                  {job.logo ? (
+                    <a
+                      href={job.companyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="inline-flex items-center justify-center h-5 px-1.5 rounded bg-zinc-800 hover:opacity-80 transition-opacity shrink-0"
+                      aria-label={`${job.company} website`}
+                      title={`${job.company} website`}
+                    >
+                      <img src={job.logo} alt={job.company} class="h-3 w-auto max-w-[60px] object-contain" />
+                    </a>
+                  ) : job.linkedinUrl && (
                     <a
                       href={job.linkedinUrl}
                       target="_blank"
@@ -268,7 +279,9 @@ import { EXPERIENCE, PROJECTS, SKILLS, SKILL_GROUPS, EDUCATION, CERTS } from "@/
               <div class="flex items-start gap-3 bg-card p-3 rounded-xl border border-border shadow-sm hover:border-accent transition-colors">
                 <!-- Issuer logo -->
                 <div class="shrink-0 mt-0.5">
-                  {cert.issuer === "Salesforce" ? (
+                  {cert.issuer === "Trailhead" ? (
+                    <img src="/images/logos/trailhead.svg" alt="Trailhead" class="w-6 h-6" />
+                  ) : cert.issuer === "Salesforce" ? (
                     <svg class="w-6 h-6" viewBox="0 0 50 34" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path fill="#00A1E0" d="M20.8 5.5a9.2 9.2 0 0 1 6.5-2.7c3.6 0 6.8 2 8.5 5a11.4 11.4 0 0 1 5-.8 11.5 11.5 0 0 1 0 23H12.8A8.6 8.6 0 0 1 4 21.5a8.6 8.6 0 0 1 8.6-8.6 8.5 8.5 0 0 1 1.9.2A9.1 9.1 0 0 1 20.8 5.5z"/>
                     </svg>

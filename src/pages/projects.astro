@@ -1,55 +1,70 @@
 ---
+import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import { SITE } from "@/config";
-import { PROJECTS } from "@/data/resume";
+
+const allPosts = await getCollection("blog", ({ data }) => {
+  return !data.draft && data.tags?.includes("Project");
+});
+
+const projects = allPosts.sort(
+  (a, b) =>
+    new Date(b.data.pubDatetime).getTime() -
+    new Date(a.data.pubDatetime).getTime()
+);
 ---
 
-<Layout title={`Projects | ${SITE.title}`} description="Projects by Alex Huang — Salesforce LWC, tooling, and AI-assisted development.">
+<Layout title={`Projects | ${SITE.title}`} description="Projects by Alex Huang — Salesforce engineering, web development, data visualisation, iOS, and Power Platform.">
   <Header />
   <main id="main-content" class="w-full max-w-5xl mx-auto px-4 py-12 md:py-16">
 
     <header class="mb-12 border-b border-border pb-8" data-fade-up>
       <h1 class="text-4xl md:text-5xl font-bold mb-3">Projects</h1>
       <p class="text-text-muted text-lg max-w-2xl">
-        A selection of things I've built — Salesforce tooling, LWC components, and AI-assisted workflows.
+        A collection of things I've built — from Salesforce platform engineering to data visualisation, mobile apps, and low-code tooling.
       </p>
     </header>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6" data-fade-up data-delay="0.1">
-      {PROJECTS.map(project => (
-        <div class="group flex flex-col bg-card p-6 md:p-8 rounded-xl border border-border shadow-sm transition-all duration-200 hover:bg-accent hover:border-accent hover:shadow-lg">
-          <div class="flex justify-between items-start mb-3">
-            <div class="flex-1 min-w-0">
-              <h2 class="text-xl font-bold text-foreground group-hover:text-white transition-colors">{project.name}</h2>
-              <p class="text-sm text-text-muted mt-0.5 group-hover:text-white/70 transition-colors">{project.context} · {project.start} — {project.end}</p>
-            </div>
-            {project.blogSlug && (
-              <a
-                href={`/posts/${project.blogSlug}`}
-                class="inline-flex items-center gap-1.5 shrink-0 ml-4 text-sm font-medium text-accent group-hover:text-white transition-colors"
-                aria-label={`Read post about ${project.name}`}
-              >
+      {projects.map(project => {
+        const year = new Date(project.data.pubDatetime).getFullYear();
+        const displayTags = project.data.tags.filter(t => t !== "Project");
+        return (
+          <a
+            href={`/posts/${project.id}`}
+            class="group flex flex-col bg-card p-6 md:p-8 rounded-xl border border-border shadow-sm transition-all duration-200 hover:bg-accent hover:border-accent hover:shadow-lg"
+          >
+            <div class="flex justify-between items-start mb-3">
+              <div class="flex-1 min-w-0">
+                <h2 class="text-xl font-bold text-foreground group-hover:text-white transition-colors leading-snug">
+                  {project.data.title}
+                </h2>
+                <p class="text-sm text-text-muted mt-0.5 group-hover:text-white/70 transition-colors">
+                  {year}
+                </p>
+              </div>
+              <span class="inline-flex items-center gap-1.5 shrink-0 ml-4 text-sm font-medium text-accent group-hover:text-white transition-colors">
                 Read Post
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                 </svg>
-              </a>
-            )}
-          </div>
-          <ul class="list-disc list-inside text-sm text-foreground/80 mb-5 space-y-1.5 group-hover:text-white/90 transition-colors">
-            {project.bullets.map(bullet => <li>{bullet}</li>)}
-          </ul>
-          <div class="flex flex-wrap gap-2 mt-auto">
-            {project.tags.map(tag => (
-              <span class="px-3 py-1 bg-card-muted text-xs font-medium rounded-full border border-border/50 text-text-muted group-hover:bg-white/15 group-hover:text-white group-hover:border-white/20 transition-colors">
-                {tag}
               </span>
-            ))}
-          </div>
-        </div>
-      ))}
+            </div>
+            <p class="text-sm text-foreground/80 mb-5 group-hover:text-white/90 transition-colors line-clamp-3">
+              {project.data.description}
+            </p>
+            <div class="flex flex-wrap gap-2 mt-auto">
+              {displayTags.map(tag => (
+                <span class="px-3 py-1 bg-card-muted text-xs font-medium rounded-full border border-border/50 text-text-muted group-hover:bg-white/15 group-hover:text-white group-hover:border-white/20 transition-colors">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </a>
+        );
+      })}
     </div>
 
   </main>

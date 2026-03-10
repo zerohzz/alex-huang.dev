@@ -54,8 +54,20 @@ const isNavActive = (href: string) => {
       id="nav-menu"
       class="flex w-full flex-col items-center sm:ms-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0"
     >
-      <!-- Mobile-only: theme toggle + hamburger always visible in top-right -->
+      <!-- Mobile-only: search + theme toggle + hamburger always visible in top-right -->
       <div class="flex items-center self-end sm:hidden">
+        <LinkButton
+          href="/search"
+          class:list={[
+            "focus-outline flex p-3",
+            { "[&>svg]:stroke-accent": isActive("/search") },
+          ]}
+          title="Search"
+          aria-label="search"
+        >
+          <IconSearch />
+          <span class="sr-only">Search</span>
+        </LinkButton>
         {
           SITE.lightAndDarkMode && (
             <button

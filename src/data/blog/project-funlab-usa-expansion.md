@@ -14,15 +14,6 @@ tags:
 description: "How I led the end-to-end Salesforce technical delivery for Funlab's US market expansion — bringing 8 US venues live with full tax compliance, multi-currency configuration, and region-specific automation from day one."
 ---
 
-| | |
-|:--|:--|
-| **Project** | Funlab USA Expansion |
-| **Company** | Funlab |
-| **Timeline** | Jun 2024 – Mar 2026 |
-| **Role** | Senior Salesforce Engineer (Sole In-House) |
-| **Stack** | Apex · AvaTax · Queueable · LWC · Conga · Multi-Region |
-
----
 
 When Funlab decided to expand into the United States, the Salesforce platform needed to be ready before the first US venue opened its doors. That meant US tax compliance, multi-currency payment flows, region-specific automation, and production-grade resilience — all delivered greenfield, alongside a live AU/NZ platform that couldn't have its existing workflows disrupted.
 
@@ -44,24 +35,7 @@ None of this could break the existing AU/NZ platform.
 
 The centrepiece of the US build was an AvaTax integration covering all 8 US venues as separate tax entities (Multi-Company States configuration). Each venue has its own AvaTax company code, address, and tax profile.
 
-Tax calculations run asynchronously via **Queueable Apex** — triggered on Opportunity Line Item changes, service charge recalculations, or tax-exempt status updates:
-
-```apex
-public class AvaTaxCalculationQueueable implements Queueable, Database.AllowsCallouts {
-    private Id opportunityId;
-
-    public AvaTaxCalculationQueueable(Id oppId) {
-        this.opportunityId = oppId;
-    }
-
-    public void execute(QueueableContext context) {
-        // Fetch OLIs, build AvaTax transaction payload with venue company code
-        // Make callout to AvaTax Multi-Company endpoint
-        // Parse jurisdiction-level tax breakdown
-        // Update OLIs with calculated tax amounts, trigger Conga re-generation
-    }
-}
-```
+Tax calculations run asynchronously via **Queueable Apex** — triggered on Opportunity Line Item changes, service charge recalculations, or tax-exempt status updates.
 
 The 20% service charge — applied automatically on certain booking types — recalculates correctly at the OLI level, with tax computed on the post-charge amount. Tax-exempt bookings zero out all tax fields and flag the exemption certificate for audit.
 

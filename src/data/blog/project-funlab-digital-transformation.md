@@ -14,15 +14,6 @@ tags:
 description: "How I joined Funlab as sole in-house Salesforce developer, took full technical ownership of a live global platform, and built the LWC booking wizard that drove 200% online revenue growth."
 ---
 
-| | |
-|:--|:--|
-| **Project** | Funlab Salesforce Digital Transformation |
-| **Company** | Funlab |
-| **Timeline** | Jul 2023 – Jan 2024 |
-| **Role** | Senior Salesforce Engineer (Sole In-House) |
-| **Stack** | LWC · Apex · SFMC · Stripe · AakPay · Azure DevOps |
-
----
 
 When I joined Funlab in July 2023, the platform had just completed a major implementation and was weeks from go-live. I was the only in-house Salesforce developer. The consulting team that built the system was handing over. My job: absorb everything, keep the platform stable, and make it grow.
 
@@ -45,19 +36,7 @@ The centrepiece of the platform is an **8-step Lightning Web Component wizard** 
 
 ### Architecture
 
-14+ sub-components, each responsible for a discrete step: venue selection, date/time, package configuration, guest details, pricing, payment, document generation, and confirmation. The parent orchestrator manages step navigation and aggregates the booking payload:
-
-```javascript
-// Parent orchestrator — step state and payload aggregation
-@track currentStep = 1;
-@track bookingPayload = {};
-
-handleStepComplete(event) {
-    const { step, data } = event.detail;
-    this.bookingPayload = { ...this.bookingPayload, ...data };
-    this.currentStep = step + 1;
-}
-```
+14+ sub-components, each responsible for a discrete step: venue selection, date/time, package configuration, guest details, pricing, payment, document generation, and confirmation. The parent orchestrator manages step navigation and aggregates the booking payload.
 
 No direct component-to-component coupling. Every data update flows through the orchestrator via custom events. This architecture made Jest unit testing tractable — each sub-component can be tested in isolation with a mocked parent.
 

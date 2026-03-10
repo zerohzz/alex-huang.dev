@@ -14,15 +14,6 @@ tags:
 description: "My experience on the full lifecycle ACH Group Salesforce implementation at Deloitte — from mobilisation and requirements through data migration, system testing, and go-live support in a regulated aged care environment."
 ---
 
-| | |
-|:--|:--|
-| **Project** | ACH Group — Salesforce Implementation |
-| **Company** | Deloitte Digital (Client: ACH Group) |
-| **Timeline** | Jun 2021 – Nov 2021 |
-| **Role** | Salesforce Consultant (BA & Technical) |
-| **Stack** | Salesforce · Flows · Salesforce Data Loader · System Testing |
-
----
 
 The ACH Group engagement at Deloitte was my first full-lifecycle Salesforce project — involved from Mobilisation and Scope Definition through to Go-Live support. ACH Group is a South Australian aged care and social services provider, and the project replaced a legacy system with a Salesforce-based platform for managing client services, referrals, and care coordination.
 

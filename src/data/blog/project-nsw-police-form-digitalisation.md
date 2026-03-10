@@ -14,15 +14,6 @@ tags:
 description: "How I led the LWC development to digitalise the NSW Police Force's paper-based Public Assembly notice form into a Salesforce Experience Cloud community portal — deploying 180+ components end-to-end."
 ---
 
-| | |
-|:--|:--|
-| **Project** | NSW Police Force — Form Digital Transformation |
-| **Company** | Deloitte Digital (Client: NSW Police Force) |
-| **Timeline** | Dec 2022 – Apr 2023 |
-| **Role** | Lead Developer |
-| **Stack** | LWC · Experience Cloud · Apex · Change Sets · Google reCAPTCHA |
-
----
 
 In late 2022 I joined Deloitte Digital's engagement with NSW Police Force as the lead developer on a digital transformation project. The challenge: replace a paper-based Public Assembly notice process with a self-service digital form embedded in the existing Salesforce Experience Cloud community portal.
 
@@ -49,17 +40,6 @@ The form itself is a multi-section LWC that guides the submitter through:
 **Address Lookup** was integrated by adapting the existing portal component. I mapped the API response fields to the form's Salesforce custom object schema, handling edge cases like partial addresses and international entries.
 
 **Google reCAPTCHA** was wired in as a child component at the submission step. The Apex controller validates the reCAPTCHA token server-side before creating any records — preventing automated form submissions.
-
-```javascript
-// Apex controller excerpt — reCAPTCHA validation before record creation
-@AuraEnabled
-public static Id submitNotice(String recaptchaToken, NoticePayload payload) {
-    if (!RecaptchaService.verify(recaptchaToken)) {
-        throw new AuraHandledException('reCAPTCHA verification failed.');
-    }
-    return NoticeService.createRecord(payload);
-}
-```
 
 ## Deployment
 
