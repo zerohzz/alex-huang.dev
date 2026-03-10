@@ -51,23 +51,23 @@ function highlightExcerpt(text: string, phrases: string[] = []): string {
   </div>
 
   <!-- Cards grid -->
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
     {recommendations.map((rec, i) => {
       const palette = AVATAR_PALETTE[i % AVATAR_PALETTE.length];
       const initials = rec.name.split(' ').map((n: string) => n[0]).join('');
       const highlightedExcerpt = highlightExcerpt(rec.excerpt, rec.highlights);
       return (
-        <div class="group flex flex-col bg-card border border-border rounded-2xl p-6 shadow-sm hover:border-accent hover:shadow-lg transition-all duration-300 cursor-default">
+        <div class="group flex flex-col bg-card border border-border rounded-2xl p-6 shadow-sm hover:bg-accent hover:border-accent hover:shadow-lg transition-all duration-300 cursor-default">
 
           <!-- Quotation mark (centered) -->
           <div class="text-center mb-3 select-none">
-            <span class="text-accent text-4xl leading-none" style="font-family: Georgia, 'Times New Roman', serif;">"</span>
+            <span class="text-accent group-hover:text-white/80 transition-colors text-4xl leading-none" style="font-family: Georgia, 'Times New Roman', serif;">"</span>
           </div>
 
           <!-- Quote block -->
           <div class="flex-1 mb-6">
             <!-- Quote text — excerpt (with highlights) by default; full review on hover -->
-            <p class="text-sm text-foreground/90 italic leading-relaxed min-h-[4.5rem]">
+            <p class="text-sm text-foreground/90 group-hover:text-white/90 italic leading-relaxed min-h-[4.5rem] transition-colors">
               <span class="group-hover:hidden" set:html={highlightedExcerpt} />
               <span class="hidden group-hover:inline">{rec.fullReview}</span>
             </p>
@@ -85,12 +85,12 @@ function highlightExcerpt(text: string, phrases: string[] = []): string {
             <div class="min-w-0">
               <!-- Name + LinkedIn icon -->
               <div class="flex items-center gap-1.5">
-                <p class="text-sm font-semibold truncate">{rec.name}</p>
+                <p class="text-sm font-semibold truncate group-hover:text-white transition-colors">{rec.name}</p>
                 <a
                   href={rec.linkedinUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="shrink-0 text-[#0A66C2] hover:opacity-75 transition-opacity"
+                  class="shrink-0 text-[#0A66C2] group-hover:text-white/80 hover:opacity-75 transition-all"
                   aria-label={`${rec.name} on LinkedIn`}
                   title={`${rec.name} on LinkedIn`}
                 >
@@ -99,19 +99,19 @@ function highlightExcerpt(text: string, phrases: string[] = []): string {
                   </svg>
                 </a>
               </div>
-              <p class="text-xs text-text-muted truncate">{rec.title} · {rec.company}</p>
+              <p class="text-xs text-text-muted group-hover:text-white/70 truncate transition-colors">{rec.title} · {rec.company}</p>
             </div>
           </div>
 
           <!-- Relationship -->
-          <p class="text-xs text-text-muted mb-5 italic">{rec.relationship}</p>
+          <p class="text-xs text-text-muted group-hover:text-white/60 mb-5 italic transition-colors">{rec.relationship}</p>
 
           <!-- CTA -->
           <a
             href={rec.evidencePath}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-1.5 text-xs font-medium text-accent hover:opacity-75 transition-opacity mt-auto group/link"
+            class="inline-flex items-center gap-1.5 text-xs font-medium text-accent group-hover:text-white hover:opacity-75 transition-all mt-auto group/link"
             aria-label={`View recognition from ${rec.name}`}
           >
             View More

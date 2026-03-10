@@ -3,7 +3,6 @@ import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
-import Socials from "@/components/Socials.astro";
 import Card from "@/components/Card.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
 import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
@@ -23,85 +22,137 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 
     <!-- Hero Section -->
     <section
-      class="mx-auto w-full max-w-5xl px-4 py-12 md:py-20 flex flex-col-reverse md:flex-row items-center justify-between gap-12"
+      class="mx-auto w-full max-w-5xl px-4 py-8 md:py-16 flex flex-col md:flex-row md:items-center justify-between gap-8 md:gap-0 overflow-hidden md:overflow-visible"
     >
-      <!-- Left column -->
-      <div class="w-full md:w-[60%] flex flex-col items-center md:items-start text-center md:text-left">
-
-        <div data-fade-up data-delay="0.1">
-          <h1 class="text-4xl md:text-6xl font-bold mb-2 text-foreground">
-            Hi, I'm <br class="hidden md:block" />Alex Huang
-          </h1>
+      <!-- Zone 1: Text -->
+      <div
+        class="w-full md:w-[52%] flex flex-col items-center md:items-start text-center md:text-left relative z-10 md:mr-[-3.5rem]"
+        data-fade-up data-delay="0.1"
+      >
+        <p class="text-sm font-light italic text-text-muted mb-1">Hi, I'm</p>
+        <h1 class="text-5xl md:text-6xl font-black text-foreground leading-none mb-4">
+          Alex Huang
+        </h1>
+        <div class="h-8 md:h-10 mb-5 flex items-center">
+          <span
+            id="typed-text"
+            class="text-lg md:text-xl font-semibold text-accent"
+            aria-live="polite"
+            data-roles={JSON.stringify(HERO.roles)}
+          ></span>
+          <span class="text-lg md:text-xl font-semibold text-accent typing-cursor">|</span>
         </div>
-
-        <div data-fade-up data-delay="0.2">
-          <div class="h-10 md:h-14 mb-6 flex items-center">
-            <span
-              id="typed-text"
-              class="text-xl md:text-3xl font-semibold text-accent"
-              aria-live="polite"
-              data-roles={JSON.stringify(HERO.roles)}
-            ></span>
-            <span class="text-xl md:text-3xl font-semibold text-accent typing-cursor">|</span>
-          </div>
+        <p class="text-sm text-text-muted mb-6 max-w-sm leading-relaxed">{SITE.desc}</p>
+        <div class="flex flex-wrap items-center justify-center md:justify-start gap-3 mb-5">
+          <a
+            href="/resume"
+            data-magnetic="0.15"
+            class="inline-block px-5 py-2.5 bg-accent text-white text-sm font-medium rounded-lg hover:opacity-90 transition-opacity"
+          >View Resume</a>
+          <a
+            href="/posts"
+            data-magnetic="0.15"
+            class="inline-block px-5 py-2.5 bg-card-muted text-foreground text-sm font-medium rounded-lg border border-border hover:border-accent transition-colors"
+          >Read Blog</a>
         </div>
-
-        <div data-fade-up data-delay="0.3">
-          <p class="text-sm md:text-base text-text-muted mb-8 max-w-xl leading-relaxed">
-            {SITE.desc}
-          </p>
+        <div class="flex items-center gap-1.5 text-xs text-text-muted font-medium">
+          <svg class="w-3.5 h-3.5 text-accent shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+          <span>{HERO.location}</span>
         </div>
-
-        <div data-fade-up data-delay="0.4">
-          <div class="mb-8">
-            <Socials />
-          </div>
-        </div>
-
-        <div data-fade-up data-delay="0.5">
-          <div class="flex flex-wrap items-center justify-center md:justify-start gap-4 mb-8">
-            <a
-              href="/resume"
-              data-magnetic="0.15"
-              class="inline-block px-6 py-3 bg-accent text-white font-medium rounded-lg hover:opacity-90 transition-opacity"
-            >
-              View Resume
-            </a>
-            <a
-              href="/posts"
-              data-magnetic="0.15"
-              class="inline-block px-6 py-3 bg-card-muted text-foreground font-medium rounded-lg border border-border hover:border-accent transition-colors"
-            >
-              Read Blog
-            </a>
-          </div>
-        </div>
-
-        <div data-fade-up data-delay="0.6">
-          <div class="flex items-center gap-2 text-sm text-text-muted font-medium">
-            <svg class="w-4 h-4 text-accent" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-            <span>{HERO.location}</span>
-          </div>
-        </div>
-
       </div>
 
-      <!-- Right column: decorative placeholder -->
-      <div data-fade-up data-delay="0.3" class="w-full md:w-[40%] flex justify-center md:justify-end">
-        <div class="relative w-64 h-64 md:w-72 md:h-72">
-          <div class="absolute inset-0 -translate-x-4 translate-y-4 dot-pattern rounded-2xl z-0 opacity-30"></div>
-          <div
-            class="relative z-10 w-full h-full rounded-2xl overflow-hidden shadow-md border border-border bg-card flex flex-col items-center justify-center text-center p-4"
-          >
-            <div class="text-6xl font-bold text-text-muted opacity-20 mb-2">AH</div>
-            <div class="text-xs text-text-muted opacity-40 font-medium uppercase tracking-widest">
-              Profile<br />Photo
-            </div>
-          </div>
+      <!-- Zone 2: Profile photo in U-shape -->
+      <div
+        class="flex justify-center w-full md:w-[30%] relative z-0"
+        data-fade-up data-delay="0.2"
+      >
+        <div
+          class="overflow-hidden w-[220px] h-[290px] md:w-[256px] md:h-[336px] shadow-lg"
+          style="border-radius: 14px 14px 9999px 9999px"
+        >
+          <img
+            src="/images/Alex-Profile.jpg"
+            alt="Alex Huang"
+            class="w-full h-full object-cover object-top"
+            loading="eager"
+            decoding="async"
+          />
         </div>
+      </div>
+
+      <!-- Zone 3: App icon rail -->
+      <div
+        class="flex flex-row flex-wrap justify-center gap-3 w-full md:w-[22%] md:flex-col md:items-center"
+        data-fade-up data-delay="0.3"
+      >
+        <!-- GitHub -->
+        <a href="https://github.com/zerohzz" target="_blank" rel="noopener noreferrer"
+           class="group flex flex-col items-center gap-1" aria-label="GitHub" title="GitHub">
+          <div class="w-12 h-12 rounded-[14px] bg-card border border-border text-text-muted flex items-center justify-center transition-all duration-200 hover:bg-accent hover:border-accent hover:text-white shadow-sm">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+            </svg>
+          </div>
+          <span class="text-[10px] font-medium text-text-muted group-hover:text-accent transition-colors">GitHub</span>
+        </a>
+
+        <!-- LinkedIn -->
+        <a href="https://www.linkedin.com/in/azhua/" target="_blank" rel="noopener noreferrer"
+           class="group flex flex-col items-center gap-1" aria-label="LinkedIn" title="LinkedIn">
+          <div class="w-12 h-12 rounded-[14px] bg-card border border-border text-text-muted flex items-center justify-center transition-all duration-200 hover:bg-accent hover:border-accent hover:text-white shadow-sm">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+          </div>
+          <span class="text-[10px] font-medium text-text-muted group-hover:text-accent transition-colors">LinkedIn</span>
+        </a>
+
+        <!-- Mail -->
+        <a href="mailto:alexander-huang@outlook.com"
+           class="group flex flex-col items-center gap-1" aria-label="Mail" title="Mail">
+          <div class="w-12 h-12 rounded-[14px] bg-card border border-border text-text-muted flex items-center justify-center transition-all duration-200 hover:bg-accent hover:border-accent hover:text-white shadow-sm">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
+          </div>
+          <span class="text-[10px] font-medium text-text-muted group-hover:text-accent transition-colors">Mail</span>
+        </a>
+
+        <!-- Resume -->
+        <a href="/resume"
+           class="group flex flex-col items-center gap-1" aria-label="Resume" title="Resume">
+          <div class="w-12 h-12 rounded-[14px] bg-card border border-border text-text-muted flex items-center justify-center transition-all duration-200 hover:bg-accent hover:border-accent hover:text-white shadow-sm">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+          </div>
+          <span class="text-[10px] font-medium text-text-muted group-hover:text-accent transition-colors">Resume</span>
+        </a>
+
+        <!-- Blog -->
+        <a href="/posts"
+           class="group flex flex-col items-center gap-1" aria-label="Blog" title="Blog">
+          <div class="w-12 h-12 rounded-[14px] bg-card border border-border text-text-muted flex items-center justify-center transition-all duration-200 hover:bg-accent hover:border-accent hover:text-white shadow-sm">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+            </svg>
+          </div>
+          <span class="text-[10px] font-medium text-text-muted group-hover:text-accent transition-colors">Blog</span>
+        </a>
+
+        <!-- Projects -->
+        <a href="/projects"
+           class="group flex flex-col items-center gap-1" aria-label="Projects" title="Projects">
+          <div class="w-12 h-12 rounded-[14px] bg-card border border-border text-text-muted flex items-center justify-center transition-all duration-200 hover:bg-accent hover:border-accent hover:text-white shadow-sm">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/>
+            </svg>
+          </div>
+          <span class="text-[10px] font-medium text-text-muted group-hover:text-accent transition-colors">Projects</span>
+        </a>
       </div>
     </section>
 
@@ -179,15 +230,15 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
         charIndex++;
       }
 
-      let speed = deleting ? 60 : 120;
+      let speed = deleting ? 35 : 70;   // ← typing speed (ms/char). Lower = faster.
 
       if (!deleting && charIndex === currentRole.length) {
-        speed = 1500;
+        speed = 1200;                   // ← pause before deleting (ms)
         deleting = true;
       } else if (deleting && charIndex === 0) {
         deleting = false;
         roleIndex = (roleIndex + 1) % ROLES.length;
-        speed = 500;
+        speed = 250;                    // ← pause before typing next word (ms)
       }
 
       timeoutId = setTimeout(type, speed);
