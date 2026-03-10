@@ -191,7 +191,7 @@ function highlightExcerpt(text: string, phrases: string[] = []): string {
           </div>
 
           <!-- Sphere view -->
-          <div id="skills-sphere-view" class="relative w-full aspect-square max-w-[360px] mx-auto">
+          <div id="skills-sphere-view" class="relative w-full aspect-square max-w-[360px] mx-auto h-[320px] md:h-auto">
             <!-- Wireframe rings -->
             <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-10 dark:opacity-20">
               <div class="w-[70%] h-[70%] rounded-full border border-foreground absolute" style="transform: rotateX(60deg)"></div>
@@ -601,10 +601,14 @@ function highlightExcerpt(text: string, phrases: string[] = []): string {
     tabBtn.addEventListener("click", showTabs);
     sphereBtn.addEventListener("click", showSphere);
 
-    // Start with sphere
-    cancelAnimationFrame(rafId);
-    sphereActive = true;
-    animateSphere();
+    // Start with sphere on desktop, tags on mobile
+    if (window.innerWidth >= 768) {
+      cancelAnimationFrame(rafId);
+      sphereActive = true;
+      animateSphere();
+    } else {
+      showTabs();
+    }
   }
 
   initResume();
