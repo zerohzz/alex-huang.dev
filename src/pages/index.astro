@@ -70,8 +70,9 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
         data-fade-up data-delay="0.2"
       >
         <div
-          class="overflow-hidden w-[260px] h-[340px] md:w-[300px] md:h-[390px] shadow-lg"
-          style="border-radius: 14px 14px 9999px 9999px"
+          id="hero-profile-wrap"
+          class="overflow-hidden w-[260px] h-[340px] md:w-[300px] md:h-[390px]"
+          style="border-radius: 14px 14px 9999px 9999px; will-change: transform; box-shadow: 0 4px 20px rgba(0,0,0,0.4);"
         >
           <img
             src="/images/Alex-Profile.jpg"
@@ -252,4 +253,41 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
       { once: true }
     );
   });
+</script>
+
+<script>
+  // Magnetic Pull — hero profile image (spring physics)
+  function initHeroMagnetic() {
+    const el = document.getElementById("hero-profile-wrap") as HTMLElement | null;
+    if (!el) return;
+
+    let tx = 0, ty = 0, cx = 0, cy = 0, raf = 0, active = false;
+
+    function loop() {
+      cx += (tx - cx) * 0.08;
+      cy += (ty - cy) * 0.08;
+      const dist = Math.sqrt(cx * cx + cy * cy);
+      el.style.transform = `translate(${cx.toFixed(2)}px, ${cy.toFixed(2)}px) scale(${active ? 1.025 : 1})`;
+      el.style.boxShadow = active
+        ? `0 ${6 + dist * 0.6}px ${22 + dist * 1.2}px rgba(0,0,0,0.45), 0 0 0 1px rgba(175,143,111,0.08)`
+        : "0 4px 20px rgba(0,0,0,0.4)";
+      if (active || dist > 0.1) raf = requestAnimationFrame(loop);
+      else {
+        el.style.transform = "";
+        el.style.boxShadow = "0 4px 20px rgba(0,0,0,0.4)";
+        raf = 0;
+      }
+    }
+
+    el.addEventListener("mouseenter", () => { active = true; if (!raf) raf = requestAnimationFrame(loop); });
+    el.addEventListener("mouseleave", () => { active = false; tx = 0; ty = 0; });
+    el.addEventListener("mousemove", (e: MouseEvent) => {
+      const r = el.getBoundingClientRect();
+      tx = ((e.clientX - r.left) / r.width  - 0.5) * 28;
+      ty = ((e.clientY - r.top)  / r.height - 0.5) * 22;
+    });
+  }
+
+  initHeroMagnetic();
+  document.addEventListener("astro:page-load", initHeroMagnetic);
 </script>
