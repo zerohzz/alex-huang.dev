@@ -15,13 +15,17 @@ pnpm-debug.log*
 
 # environment variables
 .env
-.env.production
+.env.*
+!.env.example
 
-# macOS-specific files
+# OS-specific files
 .DS_Store
+Thumbs.db
+desktop.ini
 
-# Playwright MCP logs
+# Playwright MCP / CLI logs
 .playwright-mcp/
+.playwright-cli/
 
 # jetbrains setting folder
 .idea/
@@ -29,6 +33,29 @@ pnpm-debug.log*
 # Claude Code — local AI assistant config (never commit)
 .claude/
 CLAUDE.md
+docs/superpowers/
+
+# Generated output (infographics, images, etc.)
+infographic/
 
 # Editor config
 .vscode/
+
+# Sensitive / private files
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Backup / temp files
+*.bak
+*.tmp
+*.swp
+*~
+
+# Generic logs
+*.log
+logs/
+
+# npm auth (can contain registry tokens)
+.npmrc
