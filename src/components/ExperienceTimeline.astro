@@ -1,0 +1,88 @@
+---
+// Mini work history timeline for the homepage.
+// Data comes from src/data/resume.ts — no duplication.
+
+import { EXPERIENCE } from "@/data/resume";
+
+// Key skills shown per role (manually curated subset)
+const ROLE_SKILLS: Record<string, string[]> = {
+  "Funlab": ["LWC", "Apex", "CI/CD", "60+ venues"],
+  "Deloitte Digital": ["NSW Police", "WA Health", "ACH Group"],
+  "Visible Insights": ["SharePoint", "M365", "Power BI"],
+};
+---
+
+<section
+  class="mx-auto w-full max-w-5xl px-4 pb-12 border-t border-border pt-12"
+  data-fade-up
+>
+  <div class="flex items-center justify-between mb-8">
+    <h2 class="text-2xl font-semibold text-foreground">Experience</h2>
+    <a
+      href="/resume"
+      class="text-sm text-text-muted hover:text-accent transition-colors flex items-center gap-1"
+    >
+      Full Resume
+      <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+      </svg>
+    </a>
+  </div>
+
+  <div class="relative">
+    {/* Vertical timeline line */}
+    <div class="absolute left-[5px] top-2 bottom-2 w-px bg-border" aria-hidden="true"></div>
+
+    <ol class="flex flex-col gap-6 list-none p-0">
+      {EXPERIENCE.map((role, index) => {
+        const skills = ROLE_SKILLS[role.company] ?? [];
+        return (
+          <li
+            class="relative pl-8 group"
+            data-fade-up
+            data-delay={String(index * 0.1)}
+          >
+            {/* Timeline node */}
+            <div
+              class="absolute left-0 top-[14px] w-[11px] h-[11px] rounded-full border-2 border-border bg-background group-hover:border-accent group-hover:bg-accent transition-all duration-200"
+              aria-hidden="true"
+            ></div>
+
+            {/* Card */}
+            <div class="rounded-xl border border-border bg-card p-4 shadow-sm transition-all duration-200 group-hover:border-accent/50 group-hover:shadow-md group-hover:translate-x-1">
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-3 min-w-0">
+                  {role.logo && (
+                    <img
+                      src={role.logo}
+                      alt={role.company}
+                      class="w-7 h-7 rounded-md object-cover border border-border shrink-0"
+                      loading="lazy"
+                    />
+                  )}
+                  <div class="min-w-0">
+                    <p class="text-sm font-semibold text-foreground leading-tight truncate">{role.title}</p>
+                    <p class="text-xs text-text-muted truncate">{role.company} · {role.location}</p>
+                  </div>
+                </div>
+                <span class="text-xs text-text-muted font-mono shrink-0 mt-0.5 whitespace-nowrap">
+                  {role.start} — {role.end}
+                </span>
+              </div>
+
+              {skills.length > 0 && (
+                <div class="flex flex-wrap gap-1 mt-2">
+                  {skills.map(skill => (
+                    <span class="text-[10px] font-medium px-2 py-0.5 rounded-full bg-muted text-text-muted border border-border">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+          </li>
+        );
+      })}
+    </ol>
+  </div>
+</section>
