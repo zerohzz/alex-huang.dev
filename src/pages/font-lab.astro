@@ -1,0 +1,232 @@
+---
+import Layout from "@/layouts/Layout.astro";
+---
+
+<Layout
+  title="Font Lab — alex-huang.dev"
+  description="Font preview playground — hidden utility page."
+>
+  <main id="main-content" class="w-full max-w-5xl mx-auto px-4 pt-12 pb-24">
+    <header class="mb-10">
+      <h1 class="text-3xl font-bold mb-1">Font Lab</h1>
+      <p class="text-sm text-text-muted">Click a card to select the font. Preview text is editable.</p>
+    </header>
+
+    <div
+      contenteditable="true"
+      id="preview-text"
+      class="w-full text-4xl font-semibold leading-tight mb-10 outline-none border-b border-border pb-4 focus:border-accent transition-colors"
+      style="font-family: var(--font-outfit, 'Outfit', sans-serif);"
+      suppressContentEditableWarning={true}
+    >
+      The quick brown fox jumps over the lazy dog.
+    </div>
+
+    <div id="font-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-24">
+    </div>
+  </main>
+
+  <!-- Fixed bottom bar -->
+  <div
+    id="font-bar"
+    class="fixed bottom-0 left-0 right-0 border-t border-border bg-background/90 backdrop-blur-sm px-6 py-3 flex items-center justify-between text-sm z-50"
+  >
+    <span class="font-semibold text-foreground" id="bar-name">Outfit (current)</span>
+    <span class="font-mono text-text-muted text-xs" id="bar-family">'Outfit', sans-serif</span>
+    <button
+      id="copy-btn"
+      class="text-xs px-3 py-1 rounded-full border border-border hover:border-accent hover:text-accent transition-colors"
+    >
+      Copy CSS
+    </button>
+  </div>
+</Layout>
+
+<style>
+  .font-card {
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--card);
+    border-radius: 12px;
+    padding: 1.25rem;
+    transition: border-color 150ms, box-shadow 150ms, transform 150ms;
+  }
+  .font-card:hover {
+    border-color: color-mix(in srgb, var(--accent) 60%, transparent);
+    box-shadow: 0 4px 16px color-mix(in srgb, var(--accent) 10%, transparent);
+    transform: translateY(-2px);
+  }
+  .font-card.selected {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 25%, transparent);
+  }
+  .font-card .sample {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+    color: var(--foreground);
+  }
+  .font-card .meta {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    font-family: 'Courier New', monospace;
+  }
+  .font-card .label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--foreground);
+    margin-bottom: 0.25rem;
+  }
+  .font-card .current-badge {
+    display: inline-block;
+    font-size: 0.6rem;
+    font-weight: 600;
+    padding: 1px 6px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--accent) 20%, transparent);
+    color: var(--accent);
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+</style>
+
+<script is:inline>
+  const FONTS = [
+    {
+      name: "Outfit",
+      family: "'Outfit', sans-serif",
+      url: null, // already loaded via astro:assets Font
+      current: true,
+      sample: "Aa Bb Cc",
+      note: "Current site font",
+    },
+    {
+      name: "Geist",
+      family: "'Geist', sans-serif",
+      url: "https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&display=swap",
+      sample: "Aa Bb Cc",
+      note: "Vercel's typeface",
+    },
+    {
+      name: "Plus Jakarta Sans",
+      family: "'Plus Jakarta Sans', sans-serif",
+      url: "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap",
+      sample: "Aa Bb Cc",
+      note: "Warm geometric",
+    },
+    {
+      name: "DM Sans",
+      family: "'DM Sans', sans-serif",
+      url: "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&display=swap",
+      sample: "Aa Bb Cc",
+      note: "Low-contrast clean",
+    },
+    {
+      name: "Space Grotesk",
+      family: "'Space Grotesk', sans-serif",
+      url: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap",
+      sample: "Aa Bb Cc",
+      note: "Developer aesthetic",
+    },
+    {
+      name: "Syne",
+      family: "'Syne', sans-serif",
+      url: "https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700&display=swap",
+      sample: "Aa Bb Cc",
+      note: "Editorial / bold",
+    },
+    {
+      name: "Bricolage Grotesque",
+      family: "'Bricolage Grotesque', sans-serif",
+      url: "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700&display=swap",
+      sample: "Aa Bb Cc",
+      note: "Personality-rich",
+    },
+    {
+      name: "Satoshi",
+      family: "'Satoshi', sans-serif",
+      url: "https://api.fontshare.com/v2/css?f[]=satoshi@400,600,700&display=swap",
+      sample: "Aa Bb Cc",
+      note: "Polished modern",
+    },
+  ];
+
+  let selectedIndex = 0;
+
+  function loadFont(font) {
+    if (!font.url) return;
+    if (document.querySelector(`link[data-font="${font.name}"]`)) return;
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = font.url;
+    link.setAttribute("data-font", font.name);
+    document.head.appendChild(link);
+  }
+
+  function applyFont(index) {
+    selectedIndex = index;
+    const font = FONTS[index];
+    loadFont(font);
+
+    // Update preview text
+    const preview = document.getElementById("preview-text");
+    if (preview) preview.style.fontFamily = font.family;
+
+    // Update bottom bar
+    const barName = document.getElementById("bar-name");
+    const barFamily = document.getElementById("bar-family");
+    if (barName) barName.textContent = font.name + (font.current ? " (current)" : "");
+    if (barFamily) barFamily.textContent = font.family;
+
+    // Update card selected state
+    document.querySelectorAll(".font-card").forEach((card, i) => {
+      card.classList.toggle("selected", i === index);
+    });
+  }
+
+  function buildGrid() {
+    const grid = document.getElementById("font-grid");
+    if (!grid) return;
+    grid.innerHTML = "";
+
+    FONTS.forEach((font, i) => {
+      const card = document.createElement("div");
+      card.className = "font-card" + (i === 0 ? " selected" : "");
+      card.innerHTML = `
+        <div class="label">
+          ${font.name}
+          ${font.current ? '<span class="current-badge">current</span>' : ""}
+        </div>
+        <div class="sample" style="font-family: ${font.family};">${font.sample}</div>
+        <div class="meta">${font.note}</div>
+      `;
+      card.addEventListener("click", () => {
+        applyFont(i);
+        loadFont(font); // ensure loaded on click even if not hovered
+      });
+      // Preload on hover
+      card.addEventListener("mouseenter", () => loadFont(font));
+      grid.appendChild(card);
+    });
+  }
+
+  function setupCopyBtn() {
+    const btn = document.getElementById("copy-btn");
+    if (!btn) return;
+    btn.addEventListener("click", () => {
+      const font = FONTS[selectedIndex];
+      const css = `font-family: ${font.family};`;
+      navigator.clipboard.writeText(css).then(() => {
+        btn.textContent = "Copied!";
+        setTimeout(() => (btn.textContent = "Copy CSS"), 1500);
+      });
+    });
+  }
+
+  document.addEventListener("astro:page-load", () => {
+    buildGrid();
+    setupCopyBtn();
+  });
+</script>
