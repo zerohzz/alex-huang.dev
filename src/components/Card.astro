@@ -17,23 +17,34 @@ const { title, description, ...props } = data;
   <a
     href={getPath(id, filePath)}
     class:list={[
-      "block rounded-xl border border-border bg-card p-5",
-      "shadow-sm transition-all duration-200",
-      "hover:bg-accent hover:border-accent hover:shadow-md",
+      "block rounded-xl border border-border bg-card p-5 relative overflow-hidden",
+      "shadow-sm transition-all duration-200 ease-out",
+      "hover:-translate-y-[3px] hover:shadow-lg hover:border-accent/60",
       "focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-dashed focus-visible:outline-accent",
     ]}
     data-magnetic="0.05"
   >
+    {/* Accent left-border slide-in on hover */}
+    <span
+      class="absolute left-0 top-0 bottom-0 w-[3px] bg-accent rounded-l-xl scale-y-0 group-hover:scale-y-100 transition-transform duration-200 ease-out origin-center"
+      aria-hidden="true"
+    ></span>
+
     <Heading
       style={{ viewTransitionName: slugifyStr(title.replaceAll(".", "-")) }}
       class:list={[
-        "mb-2 text-lg font-semibold text-foreground",
-        "transition-colors duration-200 group-hover:text-white",
+        "mb-2 text-lg font-semibold text-foreground pl-1",
+        "transition-colors duration-200 group-hover:text-accent",
       ]}
     >
       {title}
     </Heading>
-    <Datetime {...props} class="mb-3 opacity-70 group-hover:text-white/70 transition-colors" />
-    <p class="text-sm leading-relaxed text-text-muted line-clamp-3 group-hover:text-white/80 transition-colors">{description}</p>
+    <Datetime
+      {...props}
+      class="mb-3 opacity-70 transition-opacity group-hover:opacity-90 pl-1"
+    />
+    <p class="text-sm leading-relaxed text-text-muted line-clamp-3 pl-1 transition-colors duration-200">
+      {description}
+    </p>
   </a>
 </li>
