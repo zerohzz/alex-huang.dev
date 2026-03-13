@@ -170,8 +170,8 @@ const structuredData = {
   <body>
     <slot />
 
-    <!-- Custom cursor -->
-    <div id="custom-cursor" aria-hidden="true"></div>
+    <!-- Custom cursor — persist across page navigations -->
+    <div id="custom-cursor" aria-hidden="true" transition:persist></div>
 
     <!-- Load full theme logic -->
     <script src="../scripts/theme.ts"></script>
