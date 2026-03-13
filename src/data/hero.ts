@@ -22,8 +22,8 @@ export const HERO = {
     "AI Integration",
   ],
   bullets: [
-    "End-to-end platform ownership across public sector, healthcare & enterprise",
-    "LWC booking wizard that drove 200% online revenue growth",
-    "Scalable CI/CD pipelines & multi-org DevOps at production scale",
+    "End-to-end solution delivery specialist across public sector, healthcare, and Entertainment industries.",
+    "With a strong track record of transforming complex business requirements into production-ready systems.",
+    "Fulfilled various roles such as technical consultant, senior developer, designer, and functional business analyst, consistently achieving impactful results.",
   ],
 } as const;
