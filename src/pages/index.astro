@@ -354,7 +354,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 
       launchConfetti(e, clickCount);
 
-      if (clickCount >= 8) {
+      if (clickCount >= 10) {
         clickCount = 0;
         setTimeout(() => { window.location.href = "/lab"; }, 700);
         return;
