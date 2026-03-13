@@ -146,3 +146,101 @@ html[data-theme="dark"] {
 :target {
   scroll-margin-block: 1rem;
 }
+
+/* Hero bio tags — shimmer effect */
+@keyframes shimmer {
+  0% { opacity: 0.7; }
+  50% { opacity: 1; }
+  100% { opacity: 0.7; }
+}
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.65rem;
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text-muted);
+  animation: shimmer 3s ease-in-out infinite;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.hero-tag:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+.hero-tag--accent {
+  background: color-mix(in srgb, var(--accent) 15%, var(--card));
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+  color: var(--accent);
+}
+
+.hero-bullet {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.hero-bullet::before {
+  content: '';
+  display: block;
+  width: 5px;
+  height: 5px;
+  min-width: 5px;
+  border-radius: 1px;
+  background: var(--accent);
+  margin-top: 0.45rem;
+}
+
+/* Icon rail staggered entrance */
+@keyframes icon-slide-in {
+  from { opacity: 0; transform: translateX(12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.icon-rail-item {
+  animation: icon-slide-in 0.4s ease-out both;
+}
+
+/* Astro View Transition — page fade */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-out {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-6px); }
+}
+
+::view-transition-old(root) {
+  animation: 180ms ease-in fade-out;
+}
+
+::view-transition-new(root) {
+  animation: 220ms ease-out fade-in;
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+  .group:hover [class*="translate"] {
+    transform: none !important;
+  }
+  .icon-rail-item {
+    animation: none;
+    opacity: 1;
+  }
+}
