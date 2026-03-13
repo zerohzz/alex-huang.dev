@@ -4,6 +4,9 @@ import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import { SITE } from "@/config";
+import { getPath } from "@/utils/getPath";
+
+const STUDENT_YEAR_CUTOFF = 2019;
 
 const allPosts = await getCollection("blog", ({ data }) => {
   return !data.draft && data.tags?.includes("Project");
@@ -14,11 +17,23 @@ const projects = allPosts.sort(
     new Date(b.data.pubDatetime).getTime() -
     new Date(a.data.pubDatetime).getTime()
 );
+
+// Group by year descending
+const byYear = new Map<number, typeof projects>();
+for (const post of projects) {
+  const year = new Date(post.data.pubDatetime).getFullYear();
+  if (!byYear.has(year)) byYear.set(year, []);
+  byYear.get(year)!.push(post);
+}
+const sortedYears = [...byYear.keys()].sort((a, b) => b - a);
 ---
 
-<Layout title={`Projects | ${SITE.title}`} description="Projects by Alex Huang — Salesforce engineering, web development, data visualisation, iOS, and Power Platform.">
+<Layout
+  title={`Projects | ${SITE.title}`}
+  description="Projects by Alex Huang — Salesforce engineering, web development, data visualisation, iOS, and Power Platform."
+>
   <Header />
-  <main id="main-content" class="w-full max-w-5xl mx-auto px-4 py-12 md:py-16">
+  <main id="main-content" class="w-full max-w-5xl mx-auto px-4 pt-8 pb-16">
 
     <header class="mb-12 border-b border-border pb-8" data-fade-up>
       <h1 class="text-4xl md:text-5xl font-bold mb-3">Projects</h1>
@@ -27,44 +42,79 @@ const projects = allPosts.sort(
       </p>
     </header>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6" data-fade-up data-delay="0.1">
-      {projects.map(project => {
-        const year = new Date(project.data.pubDatetime).getFullYear();
-        const displayTags = project.data.tags.filter(t => t !== "Project");
-        return (
-          <a
-            href={`/posts/${project.id}`}
-            class="group flex flex-col bg-card p-6 md:p-8 rounded-xl border border-border shadow-sm transition-all duration-200 hover:bg-accent hover:border-accent hover:shadow-lg"
-          >
-            <div class="flex justify-between items-start mb-3">
-              <div class="flex-1 min-w-0">
-                <h2 class="text-xl font-bold text-foreground group-hover:text-white transition-colors leading-snug">
-                  {project.data.title}
-                </h2>
-                <p class="text-sm text-text-muted mt-0.5 group-hover:text-white/70 transition-colors">
-                  {year}
-                </p>
-              </div>
-              <span class="inline-flex items-center gap-1.5 shrink-0 ml-4 text-sm font-medium text-accent group-hover:text-white transition-colors">
-                Read Post
-                <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                </svg>
+    {/* Timeline */}
+    <div class="relative">
+      {/* Vertical line — positioned to align with year nodes */}
+      <div
+        class="absolute left-[calc(4rem+5px)] top-0 bottom-0 w-px bg-border"
+        aria-hidden="true"
+      ></div>
+
+      <ol class="flex flex-col gap-10 list-none p-0">
+        {sortedYears.map((year, yi) => (
+          <li data-fade-up data-delay={String(yi * 0.06)}>
+            {/* Year row */}
+            <div class="flex items-center gap-4 mb-4">
+              <span class="w-16 text-right text-sm font-mono font-semibold text-accent shrink-0">
+                {year}
               </span>
+              {/* Timeline node */}
+              <div
+                class="w-[11px] h-[11px] rounded-full border-2 border-accent bg-background shrink-0 relative z-10"
+                aria-hidden="true"
+              ></div>
             </div>
-            <p class="text-sm text-foreground/80 mb-5 group-hover:text-white/90 transition-colors line-clamp-3">
-              {project.data.description}
-            </p>
-            <div class="flex flex-wrap gap-2 mt-auto">
-              {displayTags.map(tag => (
-                <span class="px-3 py-1 bg-card-muted text-xs font-medium rounded-full border border-border/50 text-text-muted group-hover:bg-white/15 group-hover:text-white group-hover:border-white/20 transition-colors">
-                  {tag}
-                </span>
+
+            {/* Projects for this year */}
+            <ul class="flex flex-col gap-3 list-none p-0 ml-[calc(4rem+1.5rem)]">
+              {byYear.get(year)!.map(post => (
+                <li class="group">
+                  <a
+                    href={getPath(post.id, post.filePath)}
+                    class="relative block rounded-xl border border-border bg-card p-4 overflow-hidden shadow-sm transition-all duration-200 ease-out hover:border-accent/60 hover:shadow-md hover:translate-x-1 focus-visible:outline-2 focus-visible:outline-dashed focus-visible:outline-accent focus-visible:no-underline"
+                  >
+                    <span
+                      class="absolute left-0 top-0 bottom-0 w-[3px] bg-accent rounded-l-xl scale-y-0 group-hover:scale-y-100 transition-transform duration-200 ease-out origin-center"
+                      aria-hidden="true"
+                    ></span>
+
+                    {year <= STUDENT_YEAR_CUTOFF && (
+                      <span class="absolute top-3 right-3 text-[10px] font-medium px-1.5 py-0.5 rounded bg-muted text-text-muted border border-border">
+                        Student
+                      </span>
+                    )}
+
+                    <h2 class="text-sm font-semibold text-foreground mb-1 pr-16 group-hover:text-accent transition-colors duration-200 leading-snug">
+                      {post.data.title}
+                    </h2>
+                    <p class="text-xs text-text-muted line-clamp-2 leading-relaxed mb-2">
+                      {post.data.description}
+                    </p>
+                    {post.data.tags.filter(t => t !== "Project").slice(0, 4).length > 0 && (
+                      <ul class="flex flex-wrap gap-1 list-none p-0">
+                        {post.data.tags.filter(t => t !== "Project").slice(0, 4).map(tag => (
+                          <li>
+                            <span class="text-[10px] font-medium px-2 py-0.5 rounded-full bg-muted text-text-muted border border-border">
+                              {tag}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+
+                    <div class="flex items-center gap-1 mt-2 text-xs text-accent font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-150">
+                      Read Post
+                      <svg class="w-3 h-3 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                      </svg>
+                    </div>
+                  </a>
+                </li>
               ))}
-            </div>
-          </a>
-        );
-      })}
+            </ul>
+          </li>
+        ))}
+      </ol>
     </div>
 
   </main>
