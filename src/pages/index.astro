@@ -284,9 +284,10 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
     let clickCount = 0;
     let resetTimer: ReturnType<typeof setTimeout> | null = null;
 
-    const COLORS = ["#AF8F6F", "#D4B896", "#8B7355", "#F0E0C8", "#FFFFFF", "#C9A87C", "#E8C99A"];
+    // Muted brand palette — very low saturation for subtlety
+    const COLORS = ["#AF8F6F", "#C9A87C", "#D4B896", "#8B7355", "#e8ddd3"];
 
-    function launchConfetti(intensity: number) {
+    function launchConfetti(e: MouseEvent, intensity: number) {
       const canvas = document.createElement("canvas");
       canvas.style.cssText = "position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:9999;";
       canvas.width = window.innerWidth;
@@ -294,30 +295,30 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
       document.body.appendChild(canvas);
 
       const ctx = canvas.getContext("2d")!;
-      const r = el!.getBoundingClientRect();
-      const ox = r.left + r.width / 2;
-      const oy = r.top + r.height * 0.28;
+      // Originate from mouse position, not image center
+      const ox = e.clientX;
+      const oy = e.clientY;
 
-      const count = Math.min(28 + intensity * 11, 120);
+      // Small count, tiny particles — barely-there effect
+      const count = 8 + Math.floor(intensity * 1.5);
       const particles = Array.from({ length: count }, () => {
         const angle = Math.random() * Math.PI * 2;
-        const speed = 3 + Math.random() * 8;
-        const ribbon = Math.random() > 0.45;
+        const speed = 0.8 + Math.random() * 1.8;
         return {
-          x: ox, y: oy,
+          x: ox + (Math.random() - 0.5) * 10,
+          y: oy + (Math.random() - 0.5) * 10,
           vx: Math.cos(angle) * speed,
-          vy: Math.sin(angle) * speed - 6,
+          vy: Math.sin(angle) * speed - 1.2,
           color: COLORS[Math.floor(Math.random() * COLORS.length)],
-          alpha: 1,
+          alpha: 0.38 + Math.random() * 0.18, // max ~0.56 — almost invisible
           rot: Math.random() * Math.PI * 2,
-          rotV: (Math.random() - 0.5) * 0.22,
-          w: ribbon ? 3 + Math.random() * 3 : 5 + Math.random() * 5,
-          h: ribbon ? 9 + Math.random() * 9 : 5 + Math.random() * 5,
-          ribbon,
+          rotV: (Math.random() - 0.5) * 0.18,
+          w: 1 + Math.random() * 1.2,          // 1–2.2px wide
+          h: 3.5 + Math.random() * 4,          // 3.5–7.5px long
         };
       });
 
-      const duration = intensity >= 8 ? 3200 : 2200;
+      const duration = 900;
       let start: number | null = null;
 
       function tick(ts: number) {
@@ -327,22 +328,16 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 
         for (const p of particles) {
           p.x += p.vx; p.y += p.vy;
-          p.vy += 0.28; p.vx *= 0.99;
+          p.vy += 0.06; p.vx *= 0.97;
           p.rot += p.rotV;
-          p.alpha = Math.max(0, 1 - t * 1.1);
+          p.alpha *= 0.96;
 
           ctx.save();
-          ctx.globalAlpha = p.alpha;
+          ctx.globalAlpha = p.alpha * (1 - t);
           ctx.translate(p.x, p.y);
           ctx.rotate(p.rot);
           ctx.fillStyle = p.color;
-          if (p.ribbon) {
-            ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
-          } else {
-            ctx.beginPath();
-            ctx.ellipse(0, 0, p.w / 2, p.h / 2, 0, 0, Math.PI * 2);
-            ctx.fill();
-          }
+          ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
           ctx.restore();
         }
 
@@ -353,11 +348,11 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
       requestAnimationFrame(tick);
     }
 
-    el.addEventListener("click", () => {
+    el.addEventListener("click", (e: MouseEvent) => {
       clickCount++;
       if (resetTimer) clearTimeout(resetTimer);
 
-      launchConfetti(clickCount);
+      launchConfetti(e, clickCount);
 
       if (clickCount >= 8) {
         clickCount = 0;
