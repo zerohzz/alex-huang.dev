@@ -43,7 +43,7 @@ import Layout from "@/layouts/Layout.astro";
   </div>
 </Layout>
 
-<style>
+<style is:global>
   .font-card {
     cursor: pointer;
     border: 1px solid var(--border);
@@ -379,8 +379,15 @@ import Layout from "@/layouts/Layout.astro";
     });
   }
 
-  document.addEventListener("astro:page-load", () => {
+  function init() {
     buildGrid();
     setupCopyBtn();
-  });
+  }
+
+  // Immediate call (direct navigation / script runs after DOM is ready)
+  if (document.getElementById("font-grid")) {
+    init();
+  }
+  // Also listen for client-side navigation
+  document.addEventListener("astro:page-load", init);
 </script>
