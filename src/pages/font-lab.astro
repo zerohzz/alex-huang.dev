@@ -5,6 +5,7 @@ import Layout from "@/layouts/Layout.astro";
 <Layout
   title="Font Lab — alex-huang.dev"
   description="Font preview playground — hidden utility page."
+  noindex={true}
 >
   <main id="main-content" class="w-full max-w-5xl mx-auto px-4 pt-12 pb-24">
     <header class="mb-10">
@@ -68,9 +69,17 @@ import Layout from "@/layouts/Layout.astro";
     color: var(--foreground);
   }
   .font-card .meta {
-    font-size: 0.7rem;
+    font-size: 0.69rem;
     color: var(--text-muted);
+    line-height: 1.5;
+    font-family: inherit;
+  }
+  .font-card .tag {
+    display: inline-block;
+    font-size: 0.6rem;
     font-family: 'Courier New', monospace;
+    color: color-mix(in srgb, var(--text-muted) 70%, transparent);
+    margin-top: 0.35rem;
   }
   .font-card .label {
     font-size: 0.75rem;
@@ -90,74 +99,83 @@ import Layout from "@/layouts/Layout.astro";
     margin-left: 6px;
     vertical-align: middle;
   }
+  .font-group-header {
+    grid-column: 1 / -1;
+    padding: 0.5rem 0 0.25rem;
+    border-top: 1px solid var(--border);
+    margin-top: 0.5rem;
+  }
+  .font-group-header:first-child {
+    border-top: none;
+    margin-top: 0;
+  }
+  .font-group-header h2 {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-family: 'Courier New', monospace;
+  }
+  .font-group-header p {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    margin-top: 0.1rem;
+  }
 </style>
 
 <script is:inline>
   const FONTS = [
+    // ── Sans-serif ──────────────────────────────────────────────
+    { _group: "sans" },
     {
       name: "Outfit",
       family: "'Outfit', sans-serif",
-      url: null, // already loaded via astro:assets Font
+      url: null,
       current: true,
       sample: "Aa Bb Cc",
-      note: "Current site font",
-    },
-    {
-      name: "Geist",
-      family: "'Geist', sans-serif",
-      url: "https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&display=swap",
-      sample: "Aa Bb Cc",
-      note: "Vercel's typeface",
-    },
-    {
-      name: "Plus Jakarta Sans",
-      family: "'Plus Jakarta Sans', sans-serif",
-      url: "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap",
-      sample: "Aa Bb Cc",
-      note: "Warm geometric",
+      note: "几何无衬线，字形开放，阅读舒适。当前使用字体。",
+      tag: "Google Fonts · OFL",
     },
     {
       name: "DM Sans",
       family: "'DM Sans', sans-serif",
       url: "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&display=swap",
       sample: "Aa Bb Cc",
-      note: "Low-contrast clean",
+      note: "几何骨架但笔触偏人文，x 字高适中，有温度感。最接近 Styrene 的免费替代。",
+      tag: "Google Fonts · OFL",
     },
     {
-      name: "Space Grotesk",
-      family: "'Space Grotesk', sans-serif",
-      url: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap",
+      name: "Nunito Sans",
+      family: "'Nunito Sans', sans-serif",
+      url: "https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap",
       sample: "Aa Bb Cc",
-      note: "Developer aesthetic",
+      note: "圆润末端，比 Inter 更有个性，与"亲和而专业"的气质高度吻合。",
+      tag: "Google Fonts · OFL",
     },
     {
-      name: "Syne",
-      family: "'Syne', sans-serif",
-      url: "https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700&display=swap",
+      name: "Plus Jakarta Sans",
+      family: "'Plus Jakarta Sans', sans-serif",
+      url: "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap",
       sample: "Aa Bb Cc",
-      note: "Editorial / bold",
+      note: "现代感强，字形清晰，字重丰富，标题和正文均可胜任。近 Styrene B 气质。",
+      tag: "Google Fonts · OFL",
     },
     {
-      name: "Bricolage Grotesque",
-      family: "'Bricolage Grotesque', sans-serif",
-      url: "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700&display=swap",
+      name: "Figtree",
+      family: "'Figtree', sans-serif",
+      url: "https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700&display=swap",
       sample: "Aa Bb Cc",
-      note: "Personality-rich",
+      note: "近年新秀，笔画简洁、比例均衡，轻量级使用感极好，适合界面文字。",
+      tag: "Google Fonts · OFL",
     },
-    {
-      name: "Satoshi",
-      family: "'Satoshi', sans-serif",
-      url: "https://api.fontshare.com/v2/css?f[]=satoshi@400,600,700&display=swap",
-      sample: "Aa Bb Cc",
-      note: "Polished modern",
-    },
-    // Claude-adjacent: clean, humanist, modern open-source fonts
     {
       name: "Inter",
       family: "'Inter', sans-serif",
       url: "https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap",
       sample: "Aa Bb Cc",
       note: "Claude UI / Figma default",
+      tag: "Google Fonts · OFL",
     },
     {
       name: "Manrope",
@@ -165,20 +183,23 @@ import Layout from "@/layouts/Layout.astro";
       url: "https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap",
       sample: "Aa Bb Cc",
       note: "Geometric, readable",
+      tag: "Google Fonts · OFL",
     },
     {
-      name: "Figtree",
-      family: "'Figtree', sans-serif",
-      url: "https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700&display=swap",
+      name: "Geist",
+      family: "'Geist', sans-serif",
+      url: "https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&display=swap",
       sample: "Aa Bb Cc",
-      note: "Warm geometric sans",
+      note: "Vercel's typeface",
+      tag: "Google Fonts · OFL",
     },
     {
-      name: "Nunito Sans",
-      family: "'Nunito Sans', sans-serif",
-      url: "https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap",
+      name: "Space Grotesk",
+      family: "'Space Grotesk', sans-serif",
+      url: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap",
       sample: "Aa Bb Cc",
-      note: "Rounded humanist",
+      note: "Developer aesthetic",
+      tag: "Google Fonts · OFL",
     },
     {
       name: "Albert Sans",
@@ -186,6 +207,7 @@ import Layout from "@/layouts/Layout.astro";
       url: "https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;600;700&display=swap",
       sample: "Aa Bb Cc",
       note: "Minimal geometric",
+      tag: "Google Fonts · OFL",
     },
     {
       name: "Lexend",
@@ -193,9 +215,83 @@ import Layout from "@/layouts/Layout.astro";
       url: "https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&display=swap",
       sample: "Aa Bb Cc",
       note: "Readability-first",
+      tag: "Google Fonts · OFL",
+    },
+    {
+      name: "Syne",
+      family: "'Syne', sans-serif",
+      url: "https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700&display=swap",
+      sample: "Aa Bb Cc",
+      note: "Editorial / bold",
+      tag: "Google Fonts · OFL",
+    },
+    {
+      name: "Bricolage Grotesque",
+      family: "'Bricolage Grotesque', sans-serif",
+      url: "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700&display=swap",
+      sample: "Aa Bb Cc",
+      note: "Personality-rich",
+      tag: "Google Fonts · OFL",
+    },
+    {
+      name: "Satoshi",
+      family: "'Satoshi', sans-serif",
+      url: "https://api.fontshare.com/v2/css?f[]=satoshi@400,600,700&display=swap",
+      sample: "Aa Bb Cc",
+      note: "Polished modern",
+      tag: "Fontshare · OFL",
+    },
+    // ── Serif ────────────────────────────────────────────────────
+    { _group: "serif" },
+    {
+      name: "Crimson Pro",
+      family: "'Crimson Pro', serif",
+      url: "https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&display=swap",
+      sample: "Aa Bb Cc",
+      note: "过渡型衬线，历史感与现代感平衡极好，正文可读性极强，气质沉稳。",
+      tag: "Google Fonts · OFL",
+    },
+    {
+      name: "Libre Baskerville",
+      family: "'Libre Baskerville', serif",
+      url: "https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap",
+      sample: "Aa Bb Cc",
+      note: "经典 Baskerville 的开源复刻，对标"书卷感大标题"场景。",
+      tag: "Google Fonts · OFL",
+    },
+    {
+      name: "Source Serif 4",
+      family: "'Source Serif 4', serif",
+      url: "https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&display=swap",
+      sample: "Aa Bb Cc",
+      note: "Adobe 出品的开源衬线，过渡型结构，屏幕可读性一流，字重完整。",
+      tag: "Google Fonts · OFL",
+    },
+    {
+      name: "Newsreader",
+      family: "'Newsreader', serif",
+      url: "https://fonts.googleapis.com/css2?family=Newsreader:wght@400;600;700&display=swap",
+      sample: "Aa Bb Cc",
+      note: "专为长文阅读优化的过渡型衬线，气质与 Tiempo Text 最接近。",
+      tag: "Google Fonts · OFL",
+    },
+    {
+      name: "Lora",
+      family: "'Lora', serif",
+      url: "https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&display=swap",
+      sample: "Aa Bb Cc",
+      note: "笔触带有书法感的现代衬线，正文排版优雅，与温暖克制的整体风格契合。",
+      tag: "Google Fonts · OFL",
     },
   ];
 
+  const GROUP_META = {
+    sans: { label: "无衬线类", sub: "Sans-serif — 对标 Styrene / Söhne" },
+    serif: { label: "衬线类", sub: "Serif — 对标 Galaxie Copernicus / Tiempo Text" },
+  };
+
+  // Flat list of actual font entries (no group markers)
+  const FONT_ENTRIES = FONTS.filter(f => !f._group);
   let selectedIndex = 0;
 
   function loadFont(font) {
@@ -210,20 +306,17 @@ import Layout from "@/layouts/Layout.astro";
 
   function applyFont(index) {
     selectedIndex = index;
-    const font = FONTS[index];
+    const font = FONT_ENTRIES[index];
     loadFont(font);
 
-    // Update preview text
     const preview = document.getElementById("preview-text");
     if (preview) preview.style.fontFamily = font.family;
 
-    // Update bottom bar
     const barName = document.getElementById("bar-name");
     const barFamily = document.getElementById("bar-family");
     if (barName) barName.textContent = font.name + (font.current ? " (current)" : "");
     if (barFamily) barFamily.textContent = font.family;
 
-    // Update card selected state
     document.querySelectorAll(".font-card").forEach((card, i) => {
       card.classList.toggle("selected", i === index);
     });
@@ -234,23 +327,41 @@ import Layout from "@/layouts/Layout.astro";
     if (!grid) return;
     grid.innerHTML = "";
 
-    FONTS.forEach((font, i) => {
+    let fontIndex = 0;
+    let isFirst = true;
+
+    FONTS.forEach(item => {
+      if (item._group) {
+        const meta = GROUP_META[item._group];
+        const header = document.createElement("div");
+        header.className = "font-group-header" + (isFirst ? " first-child" : "");
+        if (isFirst) header.style.borderTop = "none";
+        header.innerHTML = `
+          <h2>${meta.label}</h2>
+          <p>${meta.sub}</p>
+        `;
+        grid.appendChild(header);
+        isFirst = false;
+        return;
+      }
+
+      const i = fontIndex++;
       const card = document.createElement("div");
       card.className = "font-card" + (i === 0 ? " selected" : "");
       card.innerHTML = `
         <div class="label">
-          ${font.name}
-          ${font.current ? '<span class="current-badge">current</span>' : ""}
+          ${item.name}
+          ${item.current ? '<span class="current-badge">current</span>' : ""}
         </div>
-        <div class="sample" style="font-family: ${font.family};">${font.sample}</div>
-        <div class="meta">${font.note}</div>
+        <div class="sample" style="font-family: ${item.family};">${item.sample}</div>
+        <div class="meta">${item.note}</div>
+        ${item.tag ? `<div class="tag">${item.tag}</div>` : ""}
       `;
       card.addEventListener("click", () => {
         applyFont(i);
-        loadFont(font); // ensure loaded on click even if not hovered
+        loadFont(item);
       });
-      // Preload on hover
-      card.addEventListener("mouseenter", () => loadFont(font));
+      card.addEventListener("mouseenter", () => loadFont(item));
       grid.appendChild(card);
     });
   }
@@ -259,7 +370,7 @@ import Layout from "@/layouts/Layout.astro";
     const btn = document.getElementById("copy-btn");
     if (!btn) return;
     btn.addEventListener("click", () => {
-      const font = FONTS[selectedIndex];
+      const font = FONT_ENTRIES[selectedIndex];
       const css = `font-family: ${font.family};`;
       navigator.clipboard.writeText(css).then(() => {
         btn.textContent = "Copied!";
