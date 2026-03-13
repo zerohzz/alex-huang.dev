@@ -15,6 +15,7 @@ type Props = {
   pubDatetime?: Date;
   modDatetime?: Date | null;
   scrollSmooth?: boolean;
+  noindex?: boolean;
 };
 
 const {
@@ -27,6 +28,7 @@ const {
   pubDatetime,
   modDatetime,
   scrollSmooth = false,
+  noindex = false,
 } = Astro.props;
 
 const socialImageURL = new URL(ogImage, Astro.url);
@@ -122,6 +124,7 @@ const structuredData = {
     />
 
     <meta name="theme-color" content="" />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
 
     {
       // If PUBLIC_GOOGLE_SITE_VERIFICATION is set in the environment variable,

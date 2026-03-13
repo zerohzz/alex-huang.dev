@@ -276,6 +276,104 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 </script>
 
 <script>
+  // Profile image easter egg: confetti burst on click, navigate to /lab after 8 clicks
+  function initProfileEasterEgg() {
+    const el = document.getElementById("hero-profile-wrap") as HTMLElement | null;
+    if (!el) return;
+
+    let clickCount = 0;
+    let resetTimer: ReturnType<typeof setTimeout> | null = null;
+
+    const COLORS = ["#AF8F6F", "#D4B896", "#8B7355", "#F0E0C8", "#FFFFFF", "#C9A87C", "#E8C99A"];
+
+    function launchConfetti(intensity: number) {
+      const canvas = document.createElement("canvas");
+      canvas.style.cssText = "position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:9999;";
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      document.body.appendChild(canvas);
+
+      const ctx = canvas.getContext("2d")!;
+      const r = el!.getBoundingClientRect();
+      const ox = r.left + r.width / 2;
+      const oy = r.top + r.height * 0.28;
+
+      const count = Math.min(28 + intensity * 11, 120);
+      const particles = Array.from({ length: count }, () => {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 3 + Math.random() * 8;
+        const ribbon = Math.random() > 0.45;
+        return {
+          x: ox, y: oy,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed - 6,
+          color: COLORS[Math.floor(Math.random() * COLORS.length)],
+          alpha: 1,
+          rot: Math.random() * Math.PI * 2,
+          rotV: (Math.random() - 0.5) * 0.22,
+          w: ribbon ? 3 + Math.random() * 3 : 5 + Math.random() * 5,
+          h: ribbon ? 9 + Math.random() * 9 : 5 + Math.random() * 5,
+          ribbon,
+        };
+      });
+
+      const duration = intensity >= 8 ? 3200 : 2200;
+      let start: number | null = null;
+
+      function tick(ts: number) {
+        if (!start) start = ts;
+        const t = Math.min((ts - start) / duration, 1);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        for (const p of particles) {
+          p.x += p.vx; p.y += p.vy;
+          p.vy += 0.28; p.vx *= 0.99;
+          p.rot += p.rotV;
+          p.alpha = Math.max(0, 1 - t * 1.1);
+
+          ctx.save();
+          ctx.globalAlpha = p.alpha;
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rot);
+          ctx.fillStyle = p.color;
+          if (p.ribbon) {
+            ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+          } else {
+            ctx.beginPath();
+            ctx.ellipse(0, 0, p.w / 2, p.h / 2, 0, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          ctx.restore();
+        }
+
+        if (t < 1) requestAnimationFrame(tick);
+        else canvas.remove();
+      }
+
+      requestAnimationFrame(tick);
+    }
+
+    el.addEventListener("click", () => {
+      clickCount++;
+      if (resetTimer) clearTimeout(resetTimer);
+
+      launchConfetti(clickCount);
+
+      if (clickCount >= 8) {
+        clickCount = 0;
+        setTimeout(() => { window.location.href = "/lab"; }, 700);
+        return;
+      }
+
+      resetTimer = setTimeout(() => { clickCount = 0; }, 2500);
+    });
+  }
+
+  initProfileEasterEgg();
+  document.addEventListener("astro:page-load", initProfileEasterEgg);
+</script>
+
+<script>
   // Magnetic Pull — hero profile image (spring physics)
   function initHeroMagnetic() {
     const el = document.getElementById("hero-profile-wrap") as HTMLElement | null;

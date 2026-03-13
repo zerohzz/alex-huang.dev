@@ -1,0 +1,92 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+
+const LABS = [
+  {
+    name: "Effects Lab",
+    subtitle: "效果实验室",
+    href: "/effects-lab",
+    description: "18 interactive canvas effects. Ripple, magnetic pull, particle storm, aurora, and more. Hover to explore.",
+    badge: "18 effects",
+    icon: `<svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>`,
+  },
+  {
+    name: "Font Lab",
+    subtitle: "字体实验室",
+    href: "/font-lab",
+    description: "14 typefaces side by side — from the current Outfit to Inter, Geist, Manrope, Satoshi, and more. Click to preview, copy the CSS.",
+    badge: "14 fonts",
+    icon: `<svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h7"/></svg>`,
+  },
+];
+---
+
+<Layout
+  title="The Lab — alex-huang.dev"
+  description="Hidden playgrounds and experimental features."
+  noindex={true}
+>
+  <Header />
+  <main id="main-content" class="w-full max-w-3xl mx-auto px-4 pt-16 pb-24">
+
+    <header class="mb-14" data-fade-up>
+      <p class="text-xs font-mono tracking-[0.2em] uppercase text-accent mb-4">You found it</p>
+      <h1 class="text-4xl md:text-5xl font-black text-foreground mb-4 leading-tight">The Lab</h1>
+      <p class="text-text-muted text-base max-w-md leading-relaxed">
+        Hidden playgrounds — not linked from anywhere on the site.<br />
+        You got here by clicking the profile photo 8 times.
+      </p>
+    </header>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" data-fade-up data-delay="0.08">
+      {LABS.map(lab => (
+        <a
+          href={lab.href}
+          class="group relative block rounded-2xl border border-border bg-card p-6 overflow-hidden shadow-sm transition-all duration-200 hover:border-accent/60 hover:shadow-lg hover:-translate-y-[3px] focus-visible:outline-2 focus-visible:outline-dashed focus-visible:outline-accent focus-visible:no-underline"
+        >
+          <span
+            class="absolute left-0 top-0 bottom-0 w-[3px] bg-accent rounded-l-2xl scale-y-0 group-hover:scale-y-100 transition-transform duration-200 ease-out origin-center"
+            aria-hidden="true"
+          ></span>
+
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-10 h-10 rounded-xl bg-muted border border-border flex items-center justify-center text-text-muted group-hover:border-accent/40 group-hover:text-accent transition-colors duration-200">
+              <Fragment set:html={lab.icon} />
+            </div>
+            <span class="text-[10px] font-mono font-medium px-2 py-0.5 rounded-full bg-muted text-text-muted border border-border">
+              {lab.badge}
+            </span>
+          </div>
+
+          <h2 class="text-base font-semibold text-foreground mb-0.5 group-hover:text-accent transition-colors duration-200">
+            {lab.name}
+          </h2>
+          <p class="text-[11px] text-text-muted mb-3 font-mono">{lab.subtitle}</p>
+          <p class="text-xs text-text-muted leading-relaxed">
+            {lab.description}
+          </p>
+
+          <div class="flex items-center gap-1 mt-4 text-xs text-accent font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-150">
+            Enter Lab
+            <svg class="w-3 h-3 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+            </svg>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <div class="mt-12 pt-8 border-t border-border flex items-center justify-between" data-fade-up data-delay="0.16">
+      <a href="/" class="text-xs text-text-muted hover:text-accent transition-colors">
+        ← Back home
+      </a>
+      <p class="text-[10px] font-mono text-text-muted opacity-50">
+        /lab · unlisted
+      </p>
+    </div>
+
+  </main>
+  <Footer />
+</Layout>
